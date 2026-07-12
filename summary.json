@@ -1,37 +1,37 @@
 {
   "repository": "JongHyun070105/repo-aquarium",
   "title": "repo-aquarium",
-  "stars": 1,
-  "commits30d": 5,
+  "stars": 0,
+  "commits30d": 6,
   "contributors": [
     {
       "login": "JongHyun070105",
-      "contributions": 5
+      "contributions": 6
     }
   ],
   "languages": [
     {
       "name": "TypeScript",
-      "bytes": 71950,
-      "share": 0.9255685911289493
+      "bytes": 76366,
+      "share": 0.9295695783425845
     },
     {
       "name": "JavaScript",
       "bytes": 5786,
-      "share": 0.07443140887105074
+      "share": 0.07043042165741552
     }
   ],
   "latestRelease": {
-    "tagName": "v1.1.0",
-    "publishedAt": "2026-07-12T15:27:10Z"
+    "tagName": "v1.1.1",
+    "publishedAt": "2026-07-12T15:43:06Z"
   },
-  "lastCommitAt": "2026-07-12T15:26:16Z",
+  "lastCommitAt": "2026-07-12T15:43:03Z",
   "ci": {
     "workflow": "test.yml",
-    "status": "completed",
-    "conclusion": "success"
+    "status": "in_progress",
+    "conclusion": null
   },
-  "generatedAt": "2026-07-12T15:28:00.085Z",
+  "generatedAt": "2026-07-12T15:43:25.492Z",
   "configuration": {
     "themes": [
       "coral-day",
