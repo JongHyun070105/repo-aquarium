@@ -111,7 +111,7 @@ permissions:
 Generate an aquarium without installing a global package:
 
 ```bash
-npx github:JongHyun070105/repo-aquarium@v1 generate \
+npx --yes --package='github:JongHyun070105/repo-aquarium#v1' repo-aquarium generate \
   --repo owner/repository \
   --theme coral-day \
   --output aquarium.svg
@@ -120,7 +120,7 @@ npx github:JongHyun070105/repo-aquarium@v1 generate \
 For public repositories, the CLI can use GitHub's unauthenticated API allowance. Set `GITHUB_TOKEN` for private repositories or a higher API limit:
 
 ```bash
-GITHUB_TOKEN=github_token npx github:JongHyun070105/repo-aquarium@v1 generate \
+GITHUB_TOKEN=github_token npx --yes --package='github:JongHyun070105/repo-aquarium#v1' repo-aquarium generate \
   --repo owner/repository \
   --theme deep-ocean \
   --output aquarium.svg

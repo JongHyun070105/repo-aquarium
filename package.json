@@ -1,6 +1,6 @@
 {
   "name": "repo-aquarium",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Turn GitHub repository activity into a living pixel-art aquarium.",
   "license": "MIT",
   "type": "module",
