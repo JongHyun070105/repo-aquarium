@@ -1,0 +1,35 @@
+{
+  "repository": "JongHyun070105/repo-aquarium",
+  "title": "repo-aquarium",
+  "stars": 0,
+  "commits30d": 3,
+  "contributors": [
+    {
+      "login": "JongHyun070105",
+      "contributions": 3
+    }
+  ],
+  "languages": [
+    {
+      "name": "TypeScript",
+      "bytes": 54882,
+      "share": 0.9193426805367104
+    },
+    {
+      "name": "JavaScript",
+      "bytes": 4815,
+      "share": 0.0806573194632896
+    }
+  ],
+  "latestRelease": {
+    "tagName": "v1.0.0",
+    "publishedAt": "2026-07-12T11:21:37Z"
+  },
+  "lastCommitAt": "2026-07-12T11:21:25Z",
+  "ci": {
+    "workflow": "test.yml",
+    "status": "in_progress",
+    "conclusion": null
+  },
+  "generatedAt": "2026-07-12T11:21:53.551Z"
+}
