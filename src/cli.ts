@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 import { mkdir, writeFile } from "node:fs/promises";
+import { realpathSync } from "node:fs";
 import { dirname, extname, resolve } from "node:path";
-import { pathToFileURL } from "node:url";
+import { fileURLToPath } from "node:url";
 import { collectRepositoryStats, parseRepository, toRepositoryStats } from "./github/index.js";
 import { renderAquarium, THEMES, type Theme } from "./index.js";
 
@@ -107,7 +108,11 @@ export async function runCli(argv = process.argv.slice(2)): Promise<number> {
   }
 }
 
-if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+const invokedAsExecutable = process.argv[1]
+  ? realpathSync(process.argv[1]) === realpathSync(fileURLToPath(import.meta.url))
+  : false;
+
+if (invokedAsExecutable) {
   void runCli().then((code) => {
     if (code !== 0) process.exitCode = code;
   });

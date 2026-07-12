@@ -98,7 +98,7 @@ GitHub의 **Actions → Repo Aquarium → Run workflow**에서 한 번 실행하
 전역 패키지 설치 없이 실행할 수 있습니다.
 
 ```bash
-npx github:JongHyun070105/repo-aquarium@v1 generate \
+npx --yes --package='github:JongHyun070105/repo-aquarium#v1' repo-aquarium generate \
   --repo owner/repository \
   --theme coral-day \
   --output aquarium.svg
@@ -107,7 +107,7 @@ npx github:JongHyun070105/repo-aquarium@v1 generate \
 공개 저장소는 인증 없이도 GitHub API 허용량 안에서 사용할 수 있습니다. 비공개 저장소 또는 더 높은 API 한도가 필요하면 현재 프로세스에만 `GITHUB_TOKEN`을 설정하세요.
 
 ```bash
-GITHUB_TOKEN=github_token npx github:JongHyun070105/repo-aquarium@v1 generate \
+GITHUB_TOKEN=github_token npx --yes --package='github:JongHyun070105/repo-aquarium#v1' repo-aquarium generate \
   --repo owner/repository \
   --theme deep-ocean \
   --output aquarium.svg
