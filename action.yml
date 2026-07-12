@@ -1,0 +1,35 @@
+name: Repo Aquarium
+description: Turn repository activity into a living pixel-art aquarium and publish it to an output branch.
+author: JongHyun070105
+branding:
+  icon: activity
+  color: blue
+inputs:
+  github-token:
+    description: GitHub token with contents:write and optionally actions:read.
+    required: true
+  repository:
+    description: Repository to visualize in owner/name form. Defaults to the current repository.
+    required: false
+  themes:
+    description: Comma-separated themes (coral-day, github-dark, deep-ocean).
+    required: false
+    default: coral-day,github-dark
+  ci-workflow:
+    description: Optional workflow filename or name whose latest default-branch status is shown.
+    required: false
+  publish-branch:
+    description: Branch where generated files are atomically published.
+    required: false
+    default: aquarium-output
+  title:
+    description: Scene title. Defaults to the repository name.
+    required: false
+outputs:
+  branch:
+    description: Branch containing the generated aquarium files.
+  files:
+    description: JSON array of generated artifact paths.
+runs:
+  using: node24
+  main: dist/action/index.js
