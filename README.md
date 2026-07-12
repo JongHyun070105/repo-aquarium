@@ -105,14 +105,16 @@ Repo Aquarium maps repository data deterministically, so the same statistics pro
 | Repository signal | Aquarium detail |
 | --- | --- |
 | Commits in the last 30 days | Fish population, swim speed, and bubble density |
-| Up to 8 recent contributors | Individual fish |
-| Up to 4 top languages | Fish species and colors |
+| Up to 8 recent contributors | Individual fish labeled with the contributor's GitHub login |
+| Up to 4 languages at 1% or more | Fish species, colors, and the language legend |
 | Latest release | Open treasure chest, light, and sparkles |
 | Stars | Pearls and shell decorations on a logarithmic scale |
 | Time since the latest commit | Current strength and creature activity |
 | Optional workflow status | Buoy color, pixel icon, label, and signal pattern |
 
 The scene also contains animated waves, light rays, layered parallax, bubbles, schooling fish, moving tails, swaying plants, a pulsing jellyfish, a walking crab, shining pearls, and a CI signal buoy.
+
+Languages below 1% of the repository total are treated as incidental and are excluded from both the header legend and fish-species selection. Among the remaining languages, Repo Aquarium uses up to the top four. Each contributor fish displays its contributor name so the living population can be matched back to the people building the repository.
 
 ## Action reference
 

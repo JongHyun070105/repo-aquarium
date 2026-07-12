@@ -41,6 +41,20 @@ describe("normalizeStats", () => {
     expect(model.fish.at(-1)?.label).toBe("user-4");
   });
 
+  it("hides languages below one percent of the repository while keeping the one-percent boundary", () => {
+    const model = normalizeStats({
+      ...activeStats,
+      languages: [
+        { name: "TypeScript", bytes: 9_801, share: 0.9801 },
+        { name: "CSS", bytes: 100, share: 0.01 },
+        { name: "Shell", bytes: 99, share: 0.0099 },
+      ],
+    });
+
+    expect(model.languages.map(({ name }) => name)).toEqual(["TypeScript", "CSS"]);
+    expect(model.languages.map(({ share }) => share)).toEqual([0.9801, 0.01]);
+  });
+
   it("uses a logarithmic star scale", () => {
     const one = normalizeStats({ ...emptyStats, stars: 1 }).pearlCount;
     const hundred = normalizeStats({ ...emptyStats, stars: 100 }).pearlCount;
