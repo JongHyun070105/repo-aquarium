@@ -1,35 +1,56 @@
 {
   "repository": "JongHyun070105/repo-aquarium",
   "title": "repo-aquarium",
-  "stars": 0,
-  "commits30d": 3,
+  "stars": 1,
+  "commits30d": 5,
   "contributors": [
     {
       "login": "JongHyun070105",
-      "contributions": 3
+      "contributions": 5
     }
   ],
   "languages": [
     {
       "name": "TypeScript",
-      "bytes": 54882,
-      "share": 0.9193426805367104
+      "bytes": 71950,
+      "share": 0.9255685911289493
     },
     {
       "name": "JavaScript",
-      "bytes": 4815,
-      "share": 0.0806573194632896
+      "bytes": 5786,
+      "share": 0.07443140887105074
     }
   ],
   "latestRelease": {
-    "tagName": "v1.0.0",
-    "publishedAt": "2026-07-12T11:21:37Z"
+    "tagName": "v1.1.0",
+    "publishedAt": "2026-07-12T15:27:10Z"
   },
-  "lastCommitAt": "2026-07-12T11:21:25Z",
+  "lastCommitAt": "2026-07-12T15:26:16Z",
   "ci": {
     "workflow": "test.yml",
-    "status": "in_progress",
-    "conclusion": null
+    "status": "completed",
+    "conclusion": "success"
   },
-  "generatedAt": "2026-07-12T11:21:53.551Z"
+  "generatedAt": "2026-07-12T15:28:00.085Z",
+  "configuration": {
+    "themes": [
+      "coral-day",
+      "deep-ocean",
+      "github-dark",
+      "sunset-lagoon",
+      "arctic-ice",
+      "neon-cyber"
+    ],
+    "creatures": [
+      "fish",
+      "jellyfish",
+      "crab",
+      "turtle",
+      "seahorse",
+      "octopus",
+      "ray",
+      "pufferfish",
+      "starfish"
+    ]
+  }
 }
