@@ -1,6 +1,26 @@
-export const THEMES = ["coral-day", "deep-ocean", "github-dark"] as const;
+export const THEMES = [
+  "coral-day",
+  "deep-ocean",
+  "github-dark",
+  "sunset-lagoon",
+  "arctic-ice",
+  "neon-cyber",
+] as const;
+
+export const CREATURES = [
+  "fish",
+  "jellyfish",
+  "crab",
+  "turtle",
+  "seahorse",
+  "octopus",
+  "ray",
+  "pufferfish",
+  "starfish",
+] as const;
 
 export type Theme = (typeof THEMES)[number];
+export type Creature = (typeof CREATURES)[number];
 
 export interface ContributorStat {
   login: string;
@@ -198,3 +218,4 @@ export const normalizeStats = (stats: RepositoryStats, options: { title?: string
 };
 
 export const isTheme = (value: string): value is Theme => (THEMES as readonly string[]).includes(value);
+export const isCreature = (value: string): value is Creature => (CREATURES as readonly string[]).includes(value);

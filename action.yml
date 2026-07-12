@@ -12,9 +12,13 @@ inputs:
     description: Repository to visualize in owner/name form. Defaults to the current repository.
     required: false
   themes:
-    description: Comma-separated themes (coral-day, github-dark, deep-ocean).
+    description: Comma-separated themes (coral-day, deep-ocean, github-dark, sunset-lagoon, arctic-ice, neon-cyber).
     required: false
     default: coral-day,github-dark
+  creatures:
+    description: Comma-separated creatures to include in the scene.
+    required: false
+    default: fish,jellyfish,crab
   ci-workflow:
     description: Optional workflow filename or name whose latest default-branch status is shown.
     required: false

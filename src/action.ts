@@ -1,7 +1,7 @@
 import * as core from "@actions/core";
 import * as github from "@actions/github";
 import { collectRepositoryStats, publishArtifacts, toRepositoryStats } from "./github/index.js";
-import { renderAquarium, THEMES, type Theme } from "./index.js";
+import { CREATURES, renderAquarium, THEMES, type Creature, type Theme } from "./index.js";
 
 function currentRepository(): string {
   const { owner, repo } = github.context.repo;
@@ -24,6 +24,21 @@ export function parseThemes(value: string): Theme[] {
   return unique as Theme[];
 }
 
+export function parseCreatures(value: string): Creature[] {
+  const requested = (value || "fish,jellyfish,crab")
+    .split(",")
+    .map((creature) => creature.trim())
+    .filter(Boolean);
+  const unique = [...new Set(requested)];
+  if (unique.length === 0) throw new Error("At least one aquarium creature is required.");
+  for (const creature of unique) {
+    if (!(CREATURES as readonly string[]).includes(creature)) {
+      throw new Error(`Unknown creature "${creature}". Choose from: ${CREATURES.join(", ")}.`);
+    }
+  }
+  return unique as Creature[];
+}
+
 export async function runAction(): Promise<void> {
   const token = core.getInput("github-token", { required: true });
   core.setSecret(token);
@@ -33,6 +48,7 @@ export async function runAction(): Promise<void> {
   const publishBranch = core.getInput("publish-branch") || "aquarium-output";
   const title = core.getInput("title") || undefined;
   const themes = parseThemes(core.getInput("themes"));
+  const creatures = parseCreatures(core.getInput("creatures"));
 
   core.info(`Collecting repository activity for ${sourceRepository}.`);
   const snapshot = await collectRepositoryStats(sourceRepository, { token, ciWorkflow });
@@ -42,9 +58,12 @@ export async function runAction(): Promise<void> {
   // the fail-closed boundary that preserves the previous successful aquarium.
   const artifacts = themes.map((theme) => ({
     path: `aquarium-${theme}.svg`,
-    content: renderAquarium(theme, stats, { title: stats.title }),
+    content: renderAquarium(theme, stats, { title: stats.title, creatures }),
   }));
-  artifacts.push({ path: "summary.json", content: `${JSON.stringify(stats, null, 2)}\n` });
+  artifacts.push({
+    path: "summary.json",
+    content: `${JSON.stringify({ ...stats, configuration: { themes, creatures } }, null, 2)}\n`,
+  });
 
   core.info(`Publishing ${artifacts.length} files to ${destinationRepository}:${publishBranch}.`);
   const published = await publishArtifacts(destinationRepository, publishBranch, artifacts, {

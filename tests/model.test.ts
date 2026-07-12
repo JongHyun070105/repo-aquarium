@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { normalizeCiState, normalizeStats } from "../src/model.js";
+import { CREATURES, THEMES, isCreature, isTheme, normalizeCiState, normalizeStats } from "../src/model.js";
 import { activeStats, emptyStats } from "./fixtures/stats.js";
 
 describe("normalizeStats", () => {
@@ -62,5 +62,32 @@ describe("normalizeCiState", () => {
     ["completed", "neutral", "neutral"],
   ])("maps %s / %s to %s", (status, conclusion, expected) => {
     expect(normalizeCiState({ workflow: "CI", status, conclusion })).toBe(expected);
+  });
+});
+
+describe("public render choices", () => {
+  it("publishes the complete v1.1 theme and creature sets", () => {
+    expect(THEMES).toEqual([
+      "coral-day",
+      "deep-ocean",
+      "github-dark",
+      "sunset-lagoon",
+      "arctic-ice",
+      "neon-cyber",
+    ]);
+    expect(CREATURES).toEqual([
+      "fish",
+      "jellyfish",
+      "crab",
+      "turtle",
+      "seahorse",
+      "octopus",
+      "ray",
+      "pufferfish",
+      "starfish",
+    ]);
+    expect(isTheme("neon-cyber")).toBe(true);
+    expect(isCreature("octopus")).toBe(true);
+    expect(isCreature("shark")).toBe(false);
   });
 });

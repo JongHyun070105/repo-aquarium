@@ -1,7 +1,7 @@
 import { XMLParser } from "fast-xml-parser";
 import { describe, expect, it } from "vitest";
 import { renderAquarium } from "../src/render/index.js";
-import { THEMES } from "../src/model.js";
+import { CREATURES, THEMES } from "../src/model.js";
 import { activeStats, emptyStats } from "./fixtures/stats.js";
 
 describe("renderAquarium", () => {
@@ -29,6 +29,84 @@ describe("renderAquarium", () => {
     }
     for (const animation of ["surface", "ray", "drift", "rise", "swim", "tail", "twinkle", "jelly", "crab", "chest", "signal"]) {
       expect(svg).toContain(`@keyframes ${animation}`);
+    }
+  });
+
+  it("defaults to contributor fish, jellyfish, and crab", () => {
+    const svg = renderAquarium("coral-day", activeStats);
+
+    expect(svg).toContain('href="#px-fish-');
+    expect(svg).toContain('data-creature="jellyfish"');
+    expect(svg).toContain('data-creature="crab"');
+    expect(svg).not.toContain('data-creature="turtle"');
+  });
+
+  it("renders every configurable creature from reusable original symbols", () => {
+    const svg = renderAquarium("sunset-lagoon", activeStats, { creatures: [...CREATURES] });
+    const symbols = ["turtle", "seahorse", "octopus", "ray", "pufferfish", "starfish"];
+
+    for (const creature of CREATURES.filter((value) => value !== "fish")) {
+      expect(svg).toContain(`data-creature="${creature}"`);
+    }
+    for (const symbol of symbols) {
+      expect(svg).toContain(`<symbol id="${symbol}"`);
+      expect(svg).toContain(`href="#${symbol}"`);
+    }
+    for (const animation of ["turtle", "seahorse", "octopus", "ray-swim", "puffer", "starfish", "flipper", "tentacle"]) {
+      expect(svg).toContain(`@keyframes ${animation}`);
+    }
+  });
+
+  it("gives each new theme its own scene decoration", () => {
+    expect(renderAquarium("sunset-lagoon", activeStats)).toContain('data-theme-decoration="sunset-reflection"');
+    expect(renderAquarium("arctic-ice", activeStats)).toContain('data-theme-decoration="ice-shelf"');
+    expect(renderAquarium("neon-cyber", activeStats)).toContain('data-theme-decoration="neon-grid"');
+  });
+
+  it("allows a deliberately creature-free environmental scene", () => {
+    const svg = renderAquarium("arctic-ice", activeStats, { creatures: [] });
+
+    expect(svg).not.toContain('data-creature="');
+    expect(svg).not.toContain('class="swimmer');
+    expect(svg).toContain("Creatures: none");
+  });
+
+  it("keeps positioned creature anchors separate from animated inner groups", () => {
+    const svg = renderAquarium("neon-cyber", activeStats, { creatures: [...CREATURES] });
+
+    for (const match of svg.matchAll(/<g data-creature="([^"]+)"[^>]*transform="translate\(([^)]+)\)"[^>]*><title>[^<]+<\/title><g class="([^"]+-motion)"/g)) {
+      expect(match[1]).toBeTruthy();
+      expect(match[2]).toBeTruthy();
+      expect(match[3]).toBeTruthy();
+    }
+    expect([...svg.matchAll(/data-creature=/g)]).toHaveLength(CREATURES.length - 1);
+    expect(svg).not.toMatch(/<g class="(?:jelly|crab|turtle|seahorse|octopus|ray|puffer|starfish)-motion"[^>]*transform="translate/);
+    expect(svg).toContain('transform="translate(52 236)"><g class="plant-motion"');
+    expect(svg).toContain('transform="translate(590 225)"><g class="plant-motion alt"');
+  });
+
+  it("keeps every ambient creature below the protected header and inside the tank at motion extremes", () => {
+    const svg = renderAquarium("coral-day", activeStats, { creatures: [...CREATURES] });
+    const openingTags = [...svg.matchAll(/<g data-creature="[^"]+"[^>]+>/g)].map(([tag]) => tag);
+
+    expect(svg).toContain('<clipPath id="water-zone-coral-day"><rect x="8" y="88" width="884" height="224"/></clipPath>');
+    expect(openingTags).toHaveLength(CREATURES.length - 1);
+    for (const tag of openingTags) {
+      const number = (name: string): number => Number(tag.match(new RegExp(`${name}="(-?[\\d.]+)"`))?.[1]);
+      const x = number("data-anchor-x");
+      const y = number("data-anchor-y");
+      const width = number("data-width");
+      const height = number("data-height");
+      const minX = number("data-motion-x-min");
+      const maxX = number("data-motion-x-max");
+      const minY = number("data-motion-y-min");
+      const maxY = number("data-motion-y-max");
+
+      expect(tag).toContain('data-safe-zone="underwater"');
+      expect(x + minX).toBeGreaterThanOrEqual(8);
+      expect(x + width + maxX).toBeLessThanOrEqual(892);
+      expect(y + minY).toBeGreaterThanOrEqual(88);
+      expect(y + height + maxY).toBeLessThanOrEqual(312);
     }
   });
 
