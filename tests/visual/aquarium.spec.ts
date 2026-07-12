@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { renderAquarium, THEMES } from '../../src/index.js';
+import { CREATURES, renderAquarium, THEMES } from '../../src/index.js';
 import { activeStats } from '../fixtures/stats.js';
 
 for (const theme of THEMES) {
@@ -29,6 +29,42 @@ test('reduced motion renders a complete static scene', async ({ page }) => {
   );
   expect(animationNames.every((name) => name === 'none')).toBe(true);
   await expect(page.locator('svg')).toHaveScreenshot('coral-day-reduced-motion.png', {
+    maxDiffPixelRatio: 0.03,
+  });
+});
+
+test('all configured creatures stay below the protected header while moving', async ({ page }) => {
+  await page.setViewportSize({ width: 900, height: 320 });
+  await page.setContent(renderAquarium('neon-cyber', activeStats, { creatures: [...CREATURES] }));
+
+  const assertSafeBounds = async () => {
+    const scene = await page.locator('svg').evaluate((svg) => {
+      const root = svg.getBoundingClientRect();
+      const elements = Array.from(svg.querySelectorAll('[data-creature], [data-scene-object="plant"]'));
+      return elements.map((element) => {
+        const rect = element.getBoundingClientRect();
+        return {
+          name: element.getAttribute('data-creature') ?? element.getAttribute('data-scene-object'),
+          left: rect.left - root.left,
+          right: rect.right - root.left,
+          top: rect.top - root.top,
+          bottom: rect.bottom - root.top,
+        };
+      });
+    });
+    for (const item of scene) {
+      expect(item.left, `${item.name} left edge`).toBeGreaterThanOrEqual(8);
+      expect(item.right, `${item.name} right edge`).toBeLessThanOrEqual(892);
+      expect(item.top, `${item.name} must not overlap the header`).toBeGreaterThanOrEqual(88);
+      expect(item.bottom, `${item.name} bottom edge`).toBeLessThanOrEqual(312);
+    }
+  };
+
+  await assertSafeBounds();
+  await page.waitForTimeout(1_200);
+  await assertSafeBounds();
+  await expect(page.locator('svg')).toHaveScreenshot('all-creatures-neon-cyber.png', {
+    animations: 'disabled',
     maxDiffPixelRatio: 0.03,
   });
 });

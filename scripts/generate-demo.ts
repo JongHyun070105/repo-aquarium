@@ -1,6 +1,6 @@
 import { mkdir, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
-import { renderAquarium, THEMES, type RepositoryStats } from '../src/index.js';
+import { CREATURES, renderAquarium, THEMES, type RepositoryStats } from '../src/index.js';
 
 const stats: RepositoryStats = {
   repository: 'JongHyun070105/repo-aquarium',
@@ -26,6 +26,14 @@ const stats: RepositoryStats = {
 const destination = resolve('examples/generated');
 await mkdir(destination, { recursive: true });
 for (const theme of THEMES) {
-  await writeFile(resolve(destination, `aquarium-${theme}.svg`), renderAquarium(theme, stats), 'utf8');
+  await writeFile(
+    resolve(destination, `aquarium-${theme}.svg`),
+    renderAquarium(theme, stats, { creatures: [...CREATURES] }),
+    'utf8',
+  );
 }
-await writeFile(resolve(destination, 'summary.json'), `${JSON.stringify(stats, null, 2)}\n`, 'utf8');
+await writeFile(
+  resolve(destination, 'summary.json'),
+  `${JSON.stringify({ ...stats, configuration: { themes: THEMES, creatures: CREATURES } }, null, 2)}\n`,
+  'utf8',
+);

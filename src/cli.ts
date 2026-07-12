@@ -4,7 +4,7 @@ import { realpathSync } from "node:fs";
 import { dirname, extname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { collectRepositoryStats, parseRepository, toRepositoryStats } from "./github/index.js";
-import { renderAquarium, THEMES, type Theme } from "./index.js";
+import { CREATURES, renderAquarium, THEMES, type Creature, type Theme } from "./index.js";
 
 interface GenerateOptions {
   repository: string;
@@ -13,6 +13,7 @@ interface GenerateOptions {
   summary: string;
   title?: string;
   ciWorkflow?: string;
+  creatures: Creature[];
 }
 
 const HELP = `Repo Aquarium
@@ -22,7 +23,8 @@ Usage:
 
 Options:
   --repo <owner/repository>  Public or token-accessible repository (required)
-  --theme <name>             coral-day, deep-ocean, or github-dark
+  --theme <name>             One of the six built-in aquarium themes
+  --creatures <list>         Comma-separated creatures (default: fish,jellyfish,crab)
   --output <path>            SVG output path (required)
   --summary <path>           Stats JSON path (default: summary.json beside SVG)
   --title <text>             Override the aquarium title
@@ -43,7 +45,7 @@ export function parseGenerateArgs(argv: string[]): GenerateOptions | null {
   if (argv.includes("--help") || argv.includes("-h")) return null;
   if (argv[0] !== "generate") throw new Error(`Unknown command "${argv[0] ?? ""}". Use "generate".`);
   const values = new Map<string, string>();
-  const allowed = new Set(["--repo", "--theme", "--output", "--summary", "--title", "--ci-workflow"]);
+  const allowed = new Set(["--repo", "--theme", "--creatures", "--output", "--summary", "--title", "--ci-workflow"]);
   for (let index = 1; index < argv.length; index += 1) {
     const flag = argv[index]!;
     if (!allowed.has(flag)) throw new Error(`Unknown option "${flag}".`);
@@ -60,6 +62,17 @@ export function parseGenerateArgs(argv: string[]): GenerateOptions | null {
   if (!(THEMES as readonly string[]).includes(theme)) {
     throw new Error(`Unknown theme "${theme}". Choose one of: ${THEMES.join(", ")}.`);
   }
+  const creatureValues = (values.get("--creatures") ?? "fish,jellyfish,crab")
+    .split(",")
+    .map((creature) => creature.trim())
+    .filter(Boolean);
+  const creatures = [...new Set(creatureValues)];
+  if (creatures.length === 0) throw new Error("--creatures must include at least one creature.");
+  for (const creature of creatures) {
+    if (!(CREATURES as readonly string[]).includes(creature)) {
+      throw new Error(`Unknown creature "${creature}". Choose from: ${CREATURES.join(", ")}.`);
+    }
+  }
   const absoluteOutput = resolve(output);
   const summaryOption = values.get("--summary");
   return {
@@ -69,6 +82,7 @@ export function parseGenerateArgs(argv: string[]): GenerateOptions | null {
     summary: summaryOption ? resolve(summaryOption) : resolve(dirname(absoluteOutput), "summary.json"),
     title: values.get("--title"),
     ciWorkflow: values.get("--ci-workflow"),
+    creatures: creatures as Creature[],
   };
 }
 
@@ -92,12 +106,16 @@ export async function runCli(argv = process.argv.slice(2)): Promise<number> {
       ciWorkflow: options.ciWorkflow,
     });
     const stats = toRepositoryStats(snapshot, options.title);
-    const svg = renderAquarium(options.theme, stats, { title: stats.title });
+    const svg = renderAquarium(options.theme, stats, { title: stats.title, creatures: options.creatures });
     await mkdir(dirname(options.output), { recursive: true });
     await mkdir(dirname(options.summary), { recursive: true });
     await Promise.all([
       writeFile(options.output, svg, "utf8"),
-      writeFile(options.summary, `${JSON.stringify(stats, null, 2)}\n`, "utf8"),
+      writeFile(
+        options.summary,
+        `${JSON.stringify({ ...stats, configuration: { theme: options.theme, creatures: options.creatures } }, null, 2)}\n`,
+        "utf8",
+      ),
     ]);
     process.stdout.write(`Generated ${options.theme} aquarium: ${options.output}\n`);
     process.stdout.write(`Wrote repository summary: ${options.summary}\n`);
