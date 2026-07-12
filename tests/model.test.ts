@@ -1,0 +1,66 @@
+import { describe, expect, it } from "vitest";
+import { normalizeCiState, normalizeStats } from "../src/model.js";
+import { activeStats, emptyStats } from "./fixtures/stats.js";
+
+describe("normalizeStats", () => {
+  it("maps activity into deterministic aquarium features", () => {
+    const first = normalizeStats(activeStats);
+    const second = normalizeStats(structuredClone(activeStats));
+
+    expect(first).toEqual(second);
+    expect(first.activity).toBe("surging");
+    expect(first.fish).toHaveLength(4);
+    expect(first.languages).toHaveLength(4);
+    expect(first.languages.map(({ name }) => name)).not.toContain("Shell");
+    expect(first.bubbleCount).toBeGreaterThan(20);
+    expect(first.pearlCount).toBeGreaterThan(1);
+    expect(first.chestOpen).toBe(true);
+    expect(first.ciState).toBe("success");
+  });
+
+  it("provides a complete but quiet scene when GitHub has no data", () => {
+    const model = normalizeStats(emptyStats);
+
+    expect(model.activity).toBe("still");
+    expect(model.fish.length).toBeGreaterThan(0);
+    expect(model.bubbleCount).toBe(8);
+    expect(model.pearlCount).toBe(0);
+    expect(model.lastCommitLabel).toBe("no commits yet");
+    expect(model.chestOpen).toBe(false);
+    expect(model.ciState).toBe("unknown");
+  });
+
+  it("caps contributors and sorts them by contribution count", () => {
+    const model = normalizeStats({
+      ...activeStats,
+      contributors: Array.from({ length: 12 }, (_, index) => ({ login: `user-${index}`, contributions: index })),
+    });
+
+    expect(model.fish).toHaveLength(8);
+    expect(model.fish[0]?.label).toBe("user-11");
+    expect(model.fish.at(-1)?.label).toBe("user-4");
+  });
+
+  it("uses a logarithmic star scale", () => {
+    const one = normalizeStats({ ...emptyStats, stars: 1 }).pearlCount;
+    const hundred = normalizeStats({ ...emptyStats, stars: 100 }).pearlCount;
+    const million = normalizeStats({ ...emptyStats, stars: 1_000_000 }).pearlCount;
+
+    expect(one).toBeLessThan(hundred);
+    expect(hundred).toBeLessThan(million);
+    expect(million).toBeLessThanOrEqual(14);
+  });
+});
+
+describe("normalizeCiState", () => {
+  it.each([
+    ["completed", "success", "success"],
+    ["completed", "failure", "failure"],
+    ["completed", "cancelled", "failure"],
+    ["in_progress", null, "in-progress"],
+    ["queued", null, "in-progress"],
+    ["completed", "neutral", "neutral"],
+  ])("maps %s / %s to %s", (status, conclusion, expected) => {
+    expect(normalizeCiState({ workflow: "CI", status, conclusion })).toBe(expected);
+  });
+});

@@ -1,0 +1,46 @@
+{
+  "name": "repo-aquarium",
+  "version": "1.0.0",
+  "description": "Turn GitHub repository activity into a living pixel-art aquarium.",
+  "license": "MIT",
+  "type": "module",
+  "main": "dist/action/index.js",
+  "bin": {
+    "repo-aquarium": "dist/cli/index.js"
+  },
+  "files": [
+    "dist",
+    "action.yml",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "npm run clean && ncc build src/action.ts -o dist/action --minify && ncc build src/cli.ts -o dist/cli --minify && node scripts/postbuild.mjs",
+    "clean": "rm -rf dist",
+    "generate:demo": "tsx scripts/generate-demo.ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:visual": "playwright test",
+    "typecheck": "tsc --noEmit",
+    "check": "npm run typecheck && npm test && npm run build"
+  },
+  "dependencies": {
+    "@actions/core": "^1.11.1",
+    "@actions/github": "^9.1.1"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.55.0",
+    "@types/node": "^22.15.0",
+    "@vercel/ncc": "^0.38.3",
+    "fast-xml-parser": "^5.2.5",
+    "tsx": "^4.20.3",
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.4"
+  },
+  "overrides": {
+    "undici": "^6.27.0"
+  }
+}
