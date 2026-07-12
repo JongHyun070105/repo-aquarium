@@ -68,3 +68,27 @@ test('all configured creatures stay below the protected header while moving', as
     maxDiffPixelRatio: 0.03,
   });
 });
+
+test('plants sway while their roots remain fixed to the aquarium floor', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await page.setContent(renderAquarium('coral-day', activeStats));
+
+  const rootPositions = async () => page.locator('[data-scene-object="plant"] .plant-motion').evaluateAll((plants) =>
+    plants.map((plant) => {
+      const box = plant.getBoundingClientRect();
+      return { left: box.left, top: box.top, bottom: box.bottom };
+    }),
+  );
+  const before = await rootPositions();
+  await page.waitForTimeout(1_200);
+  const after = await rootPositions();
+
+  expect(after).toHaveLength(before.length);
+  for (let index = 0; index < before.length; index += 1) {
+    expect(Math.abs((after[index]?.bottom ?? 0) - (before[index]?.bottom ?? 0))).toBeLessThanOrEqual(1);
+  }
+  expect(after.some((position, index) =>
+    Math.abs(position.left - (before[index]?.left ?? position.left)) > 0.5
+      || Math.abs(position.top - (before[index]?.top ?? position.top)) > 0.5,
+  )).toBe(true);
+});

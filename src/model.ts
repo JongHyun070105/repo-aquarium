@@ -143,16 +143,21 @@ export const normalizeCiState = (ci: CiStat | null): CiState => {
 };
 
 const languageLimit = (languages: LanguageStat[]): AquariumLanguage[] => {
-  const sorted = [...languages]
-    .filter((item) => item.name.trim() && item.bytes >= 0)
+  const valid = [...languages].filter((item) => item.name.trim() && item.bytes >= 0);
+  const total = valid.reduce((sum, item) => sum + item.bytes, 0);
+  return valid
+    .map((item) => ({
+      ...item,
+      normalizedShare: total > 0 ? item.bytes / total : clamp(item.share, 0, 1),
+    }))
+    .filter((item) => item.normalizedShare >= 0.01)
     .sort((left, right) => right.bytes - left.bytes || left.name.localeCompare(right.name))
-    .slice(0, 4);
-  const total = sorted.reduce((sum, item) => sum + item.bytes, 0);
-  return sorted.map((item, index) => ({
-    name: item.name,
-    share: total > 0 ? item.bytes / total : clamp(item.share, 0, 1),
-    species: index as 0 | 1 | 2 | 3,
-  }));
+    .slice(0, 4)
+    .map((item, index) => ({
+      name: item.name,
+      share: item.normalizedShare,
+      species: index as 0 | 1 | 2 | 3,
+    }));
 };
 
 export const normalizeStats = (stats: RepositoryStats, options: { title?: string } = {}): AquariumModel => {

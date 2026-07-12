@@ -41,6 +41,30 @@ describe("renderAquarium", () => {
     expect(svg).not.toContain('data-creature="turtle"');
   });
 
+  it("renders every contributor name as visible text attached to its fish", () => {
+    const svg = renderAquarium("coral-day", activeStats, { creatures: ["fish"] });
+
+    for (const { login } of activeStats.contributors) {
+      expect(svg).toMatch(new RegExp(`<g class="swimmer[^>]*>[^<]*(?:<[^>]+>[^<]*)*<text[^>]*>${login}</text>`));
+    }
+    expect([...svg.matchAll(/<text[^>]*class="[^"]*fish-name[^"]*"[^>]*>/g)]).toHaveLength(activeStats.contributors.length);
+  });
+
+  it("does not render a language legend entry below one percent", () => {
+    const svg = renderAquarium("github-dark", {
+      ...activeStats,
+      languages: [
+        { name: "TypeScript", bytes: 9_801, share: 0.9801 },
+        { name: "CSS", bytes: 100, share: 0.01 },
+        { name: "Shell", bytes: 99, share: 0.0099 },
+      ],
+    });
+
+    expect(svg).toContain("TypeScript 98%");
+    expect(svg).toContain("CSS 1%");
+    expect(svg).not.toContain("Shell");
+  });
+
   it("renders every configurable creature from reusable original symbols", () => {
     const svg = renderAquarium("sunset-lagoon", activeStats, { creatures: [...CREATURES] });
     const symbols = ["turtle", "seahorse", "octopus", "ray", "pufferfish", "starfish"];
@@ -81,8 +105,22 @@ describe("renderAquarium", () => {
     }
     expect([...svg.matchAll(/data-creature=/g)]).toHaveLength(CREATURES.length - 1);
     expect(svg).not.toMatch(/<g class="(?:jelly|crab|turtle|seahorse|octopus|ray|puffer|starfish)-motion"[^>]*transform="translate/);
-    expect(svg).toContain('transform="translate(52 236)"><g class="plant-motion"');
-    expect(svg).toContain('transform="translate(590 225)"><g class="plant-motion alt"');
+    expect(svg).toContain('transform="translate(52 220)"><g class="plant-motion"');
+    expect(svg).toContain('transform="translate(590 209)"><g class="plant-motion alt"');
+  });
+
+  it("anchors plants to the floor and limits their animation to rooted swaying", () => {
+    const svg = renderAquarium("coral-day", activeStats);
+    const sway = svg.match(/@keyframes sway\{([^}]|}(?!@keyframes))*}/)?.[0] ?? "";
+
+    expect(svg).toContain(".plant-motion{transform-box:fill-box;transform-origin:bottom center;");
+    expect(svg).toContain('data-scene-object="plant" data-safe-zone="underwater" data-root-y="287" transform="translate(52 220)"><g class="plant-motion"');
+    expect(svg).toContain('data-scene-object="plant" data-safe-zone="underwater" data-root-y="287" transform="translate(590 209)"><g class="plant-motion alt"');
+    expect(svg).toContain('class="plant-root"');
+    expect(svg).toContain('class="plant-mound"');
+    expect(svg).not.toContain('.near{animation:');
+    expect(sway).toContain("skewX(");
+    expect(sway).not.toMatch(/translate[XY]?\(/);
   });
 
   it("keeps every ambient creature below the protected header and inside the tank at motion extremes", () => {
