@@ -26,6 +26,7 @@ interface RepositoryEventResponse {
 }
 
 interface ContributorActivity {
+  login: string;
   recentCommits: number;
   pullRequests: number;
   reviews: number;
@@ -87,7 +88,7 @@ export async function collectRepositoryStats(
   const activityByLogin = new Map<string, ContributorActivity>();
   const activityFor = (login: string): ContributorActivity => {
     const key = login.toLowerCase();
-    const current = activityByLogin.get(key) ?? { recentCommits: 0, pullRequests: 0, reviews: 0 };
+    const current = activityByLogin.get(key) ?? { login, recentCommits: 0, pullRequests: 0, reviews: 0 };
     activityByLogin.set(key, current);
     return current;
   };
@@ -150,10 +151,10 @@ export async function collectRepositoryStats(
     defaultBranch: repoInfo.default_branch,
     stars: repoInfo.stargazers_count,
     commits30d,
-    contributors: contributorsRaw
-      .map((item, index) => {
+    contributors: [
+      ...contributorsRaw.map((item, index) => {
         const login = item.login ?? `anonymous-${index + 1}`;
-        const activity = activityByLogin.get(login.toLowerCase()) ?? { recentCommits: 0, pullRequests: 0, reviews: 0 };
+        const activity = activityByLogin.get(login.toLowerCase()) ?? { login, recentCommits: 0, pullRequests: 0, reviews: 0 };
         return {
           login,
           contributions: item.contributions ?? 0,
@@ -162,7 +163,11 @@ export async function collectRepositoryStats(
           reviews: activity.reviews,
           avatarUrl: item.avatar_url,
         };
-      })
+      }),
+      ...[...activityByLogin.values()]
+        .filter((activity) => !contributorsRaw.some((item) => item.login?.toLowerCase() === activity.login.toLowerCase()))
+        .map((activity) => ({ ...activity, contributions: 0 })),
+    ]
       .sort((left, right) =>
         (right.recentCommits * 2 + right.pullRequests * 4 + right.reviews * 3 + right.contributions)
         - (left.recentCommits * 2 + left.pullRequests * 4 + left.reviews * 3 + left.contributions))
