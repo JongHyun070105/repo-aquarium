@@ -1,9 +1,9 @@
 # Repo Aquarium
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/JongHyun070105/repo-aquarium/aquarium-output/aquarium-github-dark.svg">
-  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/JongHyun070105/repo-aquarium/aquarium-output/aquarium-coral-day.svg">
-  <img alt="Repo Aquarium showing the activity of JongHyun070105/repo-aquarium as a pixel-art aquarium" src="https://raw.githubusercontent.com/JongHyun070105/repo-aquarium/aquarium-output/aquarium-coral-day.svg" width="900">
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/JongHyun070105/repo-aquarium/aquarium-output/aquarium-github-dark.svg?v=1.2.1">
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/JongHyun070105/repo-aquarium/aquarium-output/aquarium-coral-day.svg?v=1.2.1">
+  <img alt="Repo Aquarium living world showing evolving contributors, repository phenomena, and theme characters" src="https://raw.githubusercontent.com/JongHyun070105/repo-aquarium/aquarium-output/aquarium-coral-day.svg?v=1.2.1" width="900">
 </picture>
 
 Turn a GitHub repository's recent activity into a living pixel-art aquarium. Repo Aquarium is a reusable GitHub Action and local CLI: no hosted service, account, database, analytics, or tracking.
@@ -72,24 +72,24 @@ Replace `OWNER/REPOSITORY` with your repository path. The workflow needs `conten
 
 | Theme | Scene |
 | --- | --- |
-| `coral-day` | Bright coral, turquoise water, and warm daylight |
-| `deep-ocean` | Dark blue depths, bioluminescent life, and glowing particles |
-| `github-dark` | GitHub's dark palette with green activity accents |
-| `sunset-lagoon` | A warm tropical sunset reflected across the lagoon |
-| `arctic-ice` | Clear polar water, glacier blues, and cold highlights |
-| `neon-cyber` | Electric cyan and magenta in a futuristic night aquarium |
+| `coral-day` | Coral sprite, tropical contributor species, and a release whale |
+| `deep-ocean` | Abyss lantern keeper, bioluminescent contributors, and a release kraken |
+| `github-dark` | Octocat code diver, code-pattern fish, and green activity phenomena |
+| `sunset-lagoon` | Sunset skyfin, warm contributor species, and a golden release whale |
+| `arctic-ice` | Polar penguin, ice-pattern species, and a glacial release whale |
+| `neon-cyber` | Maintenance drone, cyber contributors, neon grid, and mecha whale |
 
 <p>
-  <img alt="Coral Day Repo Aquarium theme" src="https://raw.githubusercontent.com/JongHyun070105/repo-aquarium/aquarium-output/aquarium-coral-day.svg" width="49%">
-  <img alt="Deep Ocean Repo Aquarium theme" src="https://raw.githubusercontent.com/JongHyun070105/repo-aquarium/aquarium-output/aquarium-deep-ocean.svg" width="49%">
+  <img alt="Coral Day living world with a coral sprite and legendary whale" src="https://raw.githubusercontent.com/JongHyun070105/repo-aquarium/aquarium-output/aquarium-coral-day.svg?v=1.2.1" width="49%">
+  <img alt="Deep Ocean living world with an abyss keeper and legendary kraken" src="https://raw.githubusercontent.com/JongHyun070105/repo-aquarium/aquarium-output/aquarium-deep-ocean.svg?v=1.2.1" width="49%">
 </p>
 <p>
-  <img alt="GitHub Dark Repo Aquarium theme" src="https://raw.githubusercontent.com/JongHyun070105/repo-aquarium/aquarium-output/aquarium-github-dark.svg" width="49%">
-  <img alt="Sunset Lagoon Repo Aquarium theme" src="https://raw.githubusercontent.com/JongHyun070105/repo-aquarium/aquarium-output/aquarium-sunset-lagoon.svg" width="49%">
+  <img alt="GitHub Dark living world with an Octocat code diver" src="https://raw.githubusercontent.com/JongHyun070105/repo-aquarium/aquarium-output/aquarium-github-dark.svg?v=1.2.1" width="49%">
+  <img alt="Sunset Lagoon living world with a skyfin and golden whale" src="https://raw.githubusercontent.com/JongHyun070105/repo-aquarium/aquarium-output/aquarium-sunset-lagoon.svg?v=1.2.1" width="49%">
 </p>
 <p>
-  <img alt="Arctic Ice Repo Aquarium theme" src="https://raw.githubusercontent.com/JongHyun070105/repo-aquarium/aquarium-output/aquarium-arctic-ice.svg" width="49%">
-  <img alt="Neon Cyber Repo Aquarium theme" src="https://raw.githubusercontent.com/JongHyun070105/repo-aquarium/aquarium-output/aquarium-neon-cyber.svg" width="49%">
+  <img alt="Arctic Ice living world with a polar penguin and glacial whale" src="https://raw.githubusercontent.com/JongHyun070105/repo-aquarium/aquarium-output/aquarium-arctic-ice.svg?v=1.2.1" width="49%">
+  <img alt="Neon Cyber living world with a maintenance drone and mecha whale" src="https://raw.githubusercontent.com/JongHyun070105/repo-aquarium/aquarium-output/aquarium-neon-cyber.svg?v=1.2.1" width="49%">
 </p>
 
 Each 900×320 SVG uses integer coordinates and crisp pixel edges. It includes an accessible title and description, visible text for CI state, and a finished static scene when `prefers-reduced-motion` is enabled.

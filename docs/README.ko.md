@@ -1,9 +1,9 @@
 # Repo Aquarium
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/JongHyun070105/repo-aquarium/aquarium-output/aquarium-github-dark.svg">
-  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/JongHyun070105/repo-aquarium/aquarium-output/aquarium-coral-day.svg">
-  <img alt="JongHyun070105/repo-aquarium의 활동을 보여주는 픽셀 아트 수족관" src="https://raw.githubusercontent.com/JongHyun070105/repo-aquarium/aquarium-output/aquarium-coral-day.svg" width="900">
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/JongHyun070105/repo-aquarium/aquarium-output/aquarium-github-dark.svg?v=1.2.1">
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/JongHyun070105/repo-aquarium/aquarium-output/aquarium-coral-day.svg?v=1.2.1">
+  <img alt="진화하는 기여자와 저장소 현상, 테마 캐릭터를 보여주는 Repo Aquarium 세계" src="https://raw.githubusercontent.com/JongHyun070105/repo-aquarium/aquarium-output/aquarium-coral-day.svg?v=1.2.1" width="900">
 </picture>
 
 GitHub 저장소의 최근 활동을 살아 움직이는 픽셀 아트 수족관으로 바꿉니다. Repo Aquarium은 재사용 가능한 GitHub Action이자 로컬 CLI이며, 별도 서버·계정·데이터베이스·분석 도구·사용자 추적이 없습니다.
@@ -72,24 +72,24 @@ GitHub의 **Actions → Repo Aquarium → Run workflow**에서 한 번 실행하
 
 | 테마 | 장면 |
 | --- | --- |
-| `coral-day` | 밝은 산호초, 청록색 물, 따뜻한 햇빛 |
-| `deep-ocean` | 어두운 심해, 발광 생물, 빛나는 입자 |
-| `github-dark` | GitHub 다크 팔레트와 녹색 활동 강조 |
-| `sunset-lagoon` | 석양빛이 번지는 따뜻한 열대 라군 |
-| `arctic-ice` | 빙하색과 차가운 하이라이트가 있는 맑은 극지 바다 |
-| `neon-cyber` | 전기빛 청록·자홍색으로 표현한 미래적인 야간 수족관 |
+| `coral-day` | 산호 정령, 열대 기여자 종, 릴리스 고래 |
+| `deep-ocean` | 심해 아귀, 발광 기여자 종, 릴리스 크라켄 |
+| `github-dark` | Octocat 코드 잠수부, 코드 무늬 물고기, 녹색 활동 현상 |
+| `sunset-lagoon` | 노을 스카이핀, 따뜻한 기여자 종, 황금빛 고래 |
+| `arctic-ice` | 극지 펭귄, 빙하 무늬 생물, 빙하 고래 |
+| `neon-cyber` | 정비 드론, 사이버 기여자, 네온 그리드, 메카 고래 |
 
 <p>
-  <img alt="Coral Day Repo Aquarium 테마" src="https://raw.githubusercontent.com/JongHyun070105/repo-aquarium/aquarium-output/aquarium-coral-day.svg" width="49%">
-  <img alt="Deep Ocean Repo Aquarium 테마" src="https://raw.githubusercontent.com/JongHyun070105/repo-aquarium/aquarium-output/aquarium-deep-ocean.svg" width="49%">
+  <img alt="산호 정령과 전설 고래가 있는 Coral Day 세계" src="https://raw.githubusercontent.com/JongHyun070105/repo-aquarium/aquarium-output/aquarium-coral-day.svg?v=1.2.1" width="49%">
+  <img alt="심해 아귀와 전설 크라켄이 있는 Deep Ocean 세계" src="https://raw.githubusercontent.com/JongHyun070105/repo-aquarium/aquarium-output/aquarium-deep-ocean.svg?v=1.2.1" width="49%">
 </p>
 <p>
-  <img alt="GitHub Dark Repo Aquarium 테마" src="https://raw.githubusercontent.com/JongHyun070105/repo-aquarium/aquarium-output/aquarium-github-dark.svg" width="49%">
-  <img alt="Sunset Lagoon Repo Aquarium 테마" src="https://raw.githubusercontent.com/JongHyun070105/repo-aquarium/aquarium-output/aquarium-sunset-lagoon.svg" width="49%">
+  <img alt="Octocat 코드 잠수부가 있는 GitHub Dark 세계" src="https://raw.githubusercontent.com/JongHyun070105/repo-aquarium/aquarium-output/aquarium-github-dark.svg?v=1.2.1" width="49%">
+  <img alt="노을 스카이핀과 황금빛 고래가 있는 Sunset Lagoon 세계" src="https://raw.githubusercontent.com/JongHyun070105/repo-aquarium/aquarium-output/aquarium-sunset-lagoon.svg?v=1.2.1" width="49%">
 </p>
 <p>
-  <img alt="Arctic Ice Repo Aquarium 테마" src="https://raw.githubusercontent.com/JongHyun070105/repo-aquarium/aquarium-output/aquarium-arctic-ice.svg" width="49%">
-  <img alt="Neon Cyber Repo Aquarium 테마" src="https://raw.githubusercontent.com/JongHyun070105/repo-aquarium/aquarium-output/aquarium-neon-cyber.svg" width="49%">
+  <img alt="극지 펭귄과 빙하 고래가 있는 Arctic Ice 세계" src="https://raw.githubusercontent.com/JongHyun070105/repo-aquarium/aquarium-output/aquarium-arctic-ice.svg?v=1.2.1" width="49%">
+  <img alt="정비 드론과 메카 고래가 있는 Neon Cyber 세계" src="https://raw.githubusercontent.com/JongHyun070105/repo-aquarium/aquarium-output/aquarium-neon-cyber.svg?v=1.2.1" width="49%">
 </p>
 
 각 결과물은 900×320 반응형 SVG입니다. 정수 좌표와 선명한 픽셀 가장자리를 사용하며, 접근성용 제목·설명과 CI 상태 텍스트가 포함됩니다. `prefers-reduced-motion` 환경에서는 애니메이션을 멈추고 완성된 정적 장면을 보여줍니다.
