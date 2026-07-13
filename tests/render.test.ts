@@ -23,10 +23,12 @@ describe("renderAquarium", () => {
   it("reuses pixel-art symbols and includes the full motion system", () => {
     const svg = renderAquarium("deep-ocean", activeStats);
 
-    for (const symbol of ["px-fish-0", "bubble", "pearl", "jelly", "crab", "spark"]) {
+    for (const symbol of ["bubble", "pearl", "jelly", "crab", "spark"]) {
       expect(svg).toContain(`<symbol id="${symbol}"`);
       expect(svg).toContain(`href="#${symbol}"`);
     }
+    expect(svg).toContain('<symbol id="px-fish-0"');
+    expect(svg).toContain('href="#px-abyss-fish"');
     for (const animation of ["surface", "ray", "drift", "rise", "swim", "tail", "twinkle", "jelly", "crab", "chest", "signal"]) {
       expect(svg).toContain(`@keyframes ${animation}`);
     }
@@ -85,6 +87,42 @@ describe("renderAquarium", () => {
     expect(renderAquarium("sunset-lagoon", activeStats)).toContain('data-theme-decoration="sunset-reflection"');
     expect(renderAquarium("arctic-ice", activeStats)).toContain('data-theme-decoration="ice-shelf"');
     expect(renderAquarium("neon-cyber", activeStats)).toContain('data-theme-decoration="neon-grid"');
+  });
+
+  it.each([
+    ["coral-day", "theme-reef-sprite"],
+    ["deep-ocean", "theme-angler"],
+    ["github-dark", "theme-octocat"],
+    ["sunset-lagoon", "theme-sunbird"],
+    ["arctic-ice", "theme-penguin"],
+    ["neon-cyber", "theme-drone"],
+  ] as const)("renders the %s world with its own character cast", (theme, character) => {
+    const svg = renderAquarium(theme, activeStats);
+    expect(svg).toContain(`data-world="${theme}"`);
+    expect(svg).toContain(`data-theme-character="${character}"`);
+    expect(svg).toContain(`href="#${character}"`);
+  });
+
+  it("renders release legends, contributor evolution and repository phenomena", () => {
+    const svg = renderAquarium("deep-ocean", activeStats, { creatures: ["fish"] });
+
+    expect(svg).toContain('data-event="release-legendary"');
+    expect(svg).toContain('href="#legend-kraken"');
+    expect(svg).toContain('data-phenomenon="merge-meteor-shower"');
+    expect(svg).toContain('data-phenomenon="issue-aurora"');
+    expect(svg).toContain('data-phenomenon="review-constellation"');
+    expect(svg).toMatch(/data-evolution-stage="[123]"/);
+    expect(svg).toContain('data-evolution="guardian"');
+    expect(renderAquarium("neon-cyber", activeStats)).toContain('data-mecha-upgrade="true"');
+  });
+
+  it("turns a failed CI state into a storm", () => {
+    const svg = renderAquarium("neon-cyber", {
+      ...activeStats,
+      ci: { workflow: "CI", status: "completed", conclusion: "failure" },
+    });
+    expect(svg).toContain('data-phenomenon="ci-storm"');
+    expect(svg).toContain('class="lightning"');
   });
 
   it("allows a deliberately creature-free environmental scene", () => {

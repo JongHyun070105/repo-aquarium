@@ -10,6 +10,13 @@ Turn a GitHub repository's recent activity into a living pixel-art aquarium. Rep
 
 [한국어 문서](docs/README.ko.md) · [Privacy](docs/privacy.md) · [Example workflow](examples/repo-aquarium.yml)
 
+## v1.2 — Living worlds
+
+- Every theme now has its own world character and contributor sprite style: coral sprites, abyss lantern keepers, Octocat divers, sunset skyfins, polar penguins, and neon maintenance drones.
+- A release summons a legendary whale—or a kraken in Deep Ocean—for seven days.
+- Contributor creatures evolve through three stages from weighted commit, merged-PR, and review activity.
+- Recent merges become meteor showers, closed issues become auroras, reviews become constellations, and a failed selected CI workflow becomes a storm.
+
 ## What's new in v1.1
 
 - Choose exactly which creatures appear with the new `creatures` input or CLI `--creatures` option.
@@ -104,9 +111,14 @@ Repo Aquarium maps repository data deterministically, so the same statistics pro
 
 | Repository signal | Aquarium detail |
 | --- | --- |
-| Commits in the last 30 days | Fish population, swim speed, and bubble density |
-| Up to 8 recent contributors | Individual fish labeled with the contributor's GitHub login |
+| Commits in the last 30 days | Population, swim speed, bubble density, and contributor growth |
+| Up to 8 recent contributors | Named characters with three evolution stages |
 | Up to 4 languages at 1% or more | Fish species, colors, and the language legend |
+| Release from the last 7 days | Legendary whale, Deep Ocean kraken, or neon mecha whale |
+| Recent merged pull requests | Meteor shower intensity |
+| Recently closed issues | Aurora intensity |
+| Recent pull request reviews | Constellation density and contributor growth |
+| Failed selected CI | Lightning and rain storm |
 | Latest release | Open treasure chest, light, and sparkles |
 | Stars | Pearls and shell decorations on a logarithmic scale |
 | Time since the latest commit | Current strength and creature activity |
@@ -115,6 +127,8 @@ Repo Aquarium maps repository data deterministically, so the same statistics pro
 The scene also contains animated waves, light rays, layered parallax, bubbles, schooling fish, moving tails, swaying plants, a pulsing jellyfish, a walking crab, shining pearls, and a CI signal buoy.
 
 Languages below 1% of the repository total are treated as incidental and are excluded from both the header legend and fish-species selection. Among the remaining languages, Repo Aquarium uses up to the top four. Each contributor fish displays its contributor name so the living population can be matched back to the people building the repository.
+
+Repo event signals come from GitHub's repository events feed. The feed can be delayed, so merge, issue, review, and per-contributor evolution changes are intentionally deterministic snapshots rather than real-time telemetry. If event access is unavailable, Repo Aquarium still renders normally with zero event phenomena.
 
 ## Action reference
 

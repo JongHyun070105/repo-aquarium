@@ -7,7 +7,16 @@ export function toRepositoryStats(snapshot: RepositorySnapshot, title?: string):
     title: title?.trim() || snapshot.title,
     stars: snapshot.stars,
     commits30d: snapshot.commits30d,
-    contributors: snapshot.contributors.map(({ login, contributions }) => ({ login, contributions })),
+    mergedPullRequests30d: snapshot.mergedPullRequests30d,
+    closedIssues30d: snapshot.closedIssues30d,
+    reviews30d: snapshot.reviews30d,
+    contributors: snapshot.contributors.map(({ login, contributions, recentCommits, pullRequests, reviews }) => ({
+      login,
+      contributions,
+      recentCommits,
+      pullRequests,
+      reviews,
+    })),
     languages: snapshot.languages,
     latestRelease: snapshot.latestRelease
       ? { tagName: snapshot.latestRelease.tag, publishedAt: snapshot.latestRelease.publishedAt }

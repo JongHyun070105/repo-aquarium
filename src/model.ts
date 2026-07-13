@@ -25,6 +25,9 @@ export type Creature = (typeof CREATURES)[number];
 export interface ContributorStat {
   login: string;
   contributions: number;
+  recentCommits?: number;
+  pullRequests?: number;
+  reviews?: number;
 }
 
 export interface LanguageStat {
@@ -49,6 +52,9 @@ export interface RepositoryStats {
   title: string;
   stars: number;
   commits30d: number;
+  mergedPullRequests30d?: number;
+  closedIssues30d?: number;
+  reviews30d?: number;
   contributors: ContributorStat[];
   languages: LanguageStat[];
   latestRelease: ReleaseStat | null;
@@ -71,6 +77,9 @@ export interface AquariumFish {
   lane: number;
   reverse: boolean;
   scale: number;
+  evolutionStage: 1 | 2 | 3;
+  activityPoints: number;
+  activityLabel: string;
 }
 
 export interface AquariumLanguage {
@@ -95,6 +104,10 @@ export interface AquariumModel {
   lastCommitLabel: string;
   chestOpen: boolean;
   releaseLabel: string | null;
+  legendaryVisible: boolean;
+  mergedPullRequests30d: number;
+  closedIssues30d: number;
+  reviews30d: number;
   ciState: CiState;
   ciLabel: string;
 }
@@ -173,12 +186,18 @@ export const normalizeStats = (stats: RepositoryStats, options: { title?: string
     .slice(0, 8);
   const languages = languageLimit(stats.languages);
   const fallbackPeople = Math.max(1, Math.min(8, 2 + Math.floor(Math.log2(commits + 1))));
-  const people = contributors.length > 0
+  const people: ContributorStat[] = contributors.length > 0
     ? contributors
     : Array.from({ length: fallbackPeople }, (_, index) => ({ login: `activity-${index + 1}`, contributions: 0 }));
   const fish = people.map((person, index): AquariumFish => {
     const seed = hash(`${stats.repository}:${person.login}:${index}`);
     const species = (languages[index % Math.max(1, languages.length)]?.species ?? (seed % 4)) as 0 | 1 | 2 | 3;
+    const recentCommits = Math.round(clamp(person.recentCommits ?? 0, 0, 10_000));
+    const pullRequests = Math.round(clamp(person.pullRequests ?? 0, 0, 10_000));
+    const reviews = Math.round(clamp(person.reviews ?? 0, 0, 10_000));
+    const contributionBase = Math.min(18, Math.log2(Math.max(0, person.contributions) + 1) * 3);
+    const activityPoints = Math.round(contributionBase + recentCommits * 2 + pullRequests * 4 + reviews * 3);
+    const evolutionStage = (activityPoints >= 30 ? 3 : activityPoints >= 12 ? 2 : 1) as 1 | 2 | 3;
     return {
       id: `fish-${index + 1}`,
       label: person.login,
@@ -189,11 +208,15 @@ export const normalizeStats = (stats: RepositoryStats, options: { title?: string
       delaySeconds: -((seed >>> 8) % 120) / 10,
       lane: index % 5,
       reverse: ((seed >>> 16) & 1) === 1,
-      scale: 0.78 + ((seed >>> 20) % 24) / 100,
+      scale: 0.68 + evolutionStage * 0.1 + ((seed >>> 20) % 16) / 100,
+      evolutionStage,
+      activityPoints,
+      activityLabel: `${recentCommits} commits · ${pullRequests} PRs · ${reviews} reviews`,
     };
   });
   const releaseDate = validDate(stats.latestRelease?.publishedAt);
-  const chestOpen = releaseDate ? daysBetween(generatedAt, releaseDate) <= 30 : false;
+  const releaseAge = releaseDate ? daysBetween(generatedAt, releaseDate) : Number.POSITIVE_INFINITY;
+  const chestOpen = releaseAge <= 30;
   const ciState = normalizeCiState(stats.ci);
   const ciName = stats.ci?.workflow?.trim() || "CI";
   const ciLabel = ciState === "in-progress" ? `${ciName}: running` : `${ciName}: ${ciState}`;
@@ -217,6 +240,10 @@ export const normalizeStats = (stats: RepositoryStats, options: { title?: string
       : "no commits yet",
     chestOpen,
     releaseLabel: stats.latestRelease?.tagName ?? null,
+    legendaryVisible: releaseAge <= 7,
+    mergedPullRequests30d: Math.round(clamp(stats.mergedPullRequests30d ?? 0, 0, 10_000)),
+    closedIssues30d: Math.round(clamp(stats.closedIssues30d ?? 0, 0, 10_000)),
+    reviews30d: Math.round(clamp(stats.reviews30d ?? 0, 0, 10_000)),
     ciState,
     ciLabel,
   };

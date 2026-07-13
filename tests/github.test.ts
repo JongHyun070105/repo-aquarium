@@ -16,6 +16,13 @@ describe("collectRepositoryStats", () => {
       if (url.endsWith("/repos/acme/tank")) return json({ full_name: "acme/tank", name: "tank", description: "demo", default_branch: "main", stargazers_count: 120 });
       if (url.endsWith("/languages")) return json({ TypeScript: 700, CSS: 200, HTML: 100, Shell: 50, Ruby: 25 });
       if (url.includes("/contributors")) return json(Array.from({ length: 9 }, (_, index) => ({ login: `u${index}`, contributions: 9 - index })));
+      if (url.includes("/events?per_page=100")) return json([
+        { type: "PushEvent", actor: { login: "u0" }, created_at: "2026-07-11T09:00:00Z", payload: { commits: [{}, {}] } },
+        { type: "PullRequestEvent", actor: { login: "u0" }, created_at: "2026-07-10T09:00:00Z", payload: { action: "closed", pull_request: { merged: true } } },
+        { type: "PullRequestReviewEvent", actor: { login: "u1" }, created_at: "2026-07-09T09:00:00Z", payload: { action: "created" } },
+        { type: "IssuesEvent", actor: { login: "u2" }, created_at: "2026-07-08T09:00:00Z", payload: { action: "closed", issue: {} } },
+        { type: "IssuesEvent", actor: { login: "u2" }, created_at: "2026-06-01T09:00:00Z", payload: { action: "closed", issue: {} } },
+      ]);
       if (url.endsWith("/releases/latest")) return json({ tag_name: "v1.0.0", name: "First", published_at: "2026-07-10T00:00:00Z", html_url: "https://github.com/acme/tank/releases/v1" });
       if (url.includes("/commits?per_page=1")) return json([{ commit: { committer: { date: "2026-07-11T00:00:00Z" } } }]);
       if (url.includes("/commits?since=")) return json([{ commit: {} }, { commit: {} }]);
@@ -31,6 +38,9 @@ describe("collectRepositoryStats", () => {
 
     expect(stats.commits30d).toBe(2);
     expect(stats.contributors).toHaveLength(8);
+    expect(stats.contributors[0]).toMatchObject({ login: "u0", recentCommits: 2, pullRequests: 1, reviews: 0 });
+    expect(stats.contributors.find(({ login }) => login === "u1")).toMatchObject({ reviews: 1 });
+    expect(stats).toMatchObject({ mergedPullRequests30d: 1, closedIssues30d: 1, reviews30d: 1 });
     expect(stats.languages).toHaveLength(4);
     expect(stats.languages[0]).toMatchObject({ name: "TypeScript", share: 700 / 1075 });
     expect(stats.latestRelease?.tag).toBe("v1.0.0");
@@ -44,6 +54,7 @@ describe("collectRepositoryStats", () => {
       if (url.endsWith("/repos/acme/empty")) return json({ full_name: "acme/empty", name: "empty", description: null, default_branch: "main", stargazers_count: 0 });
       if (url.endsWith("/languages")) return json({});
       if (url.includes("/contributors")) return json([]);
+      if (url.includes("/events?per_page=100")) return json({ message: "Forbidden" }, 403);
       if (url.endsWith("/releases/latest")) return json({ message: "Not Found" }, 404);
       if (url.includes("/commits?per_page=1")) return json({ message: "Git Repository is empty." }, 409);
       if (url.includes("/commits?since=")) return json([]);
@@ -51,7 +62,7 @@ describe("collectRepositoryStats", () => {
     }) as typeof fetch;
 
     const stats = await collectRepositoryStats("acme/empty", { fetchImpl });
-    expect(stats).toMatchObject({ commits30d: 0, lastCommitAt: null, latestRelease: null, contributors: [], languages: [] });
+    expect(stats).toMatchObject({ commits30d: 0, mergedPullRequests30d: 0, closedIssues30d: 0, reviews30d: 0, lastCommitAt: null, latestRelease: null, contributors: [], languages: [] });
   });
 
   it("explains anonymous rate limits without exposing the token", async () => {
