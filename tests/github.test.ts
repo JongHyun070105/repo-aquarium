@@ -20,6 +20,7 @@ describe("collectRepositoryStats", () => {
         { type: "PushEvent", actor: { login: "u0" }, created_at: "2026-07-11T09:00:00Z", payload: { commits: [{}, {}] } },
         { type: "PullRequestEvent", actor: { login: "u0" }, created_at: "2026-07-10T09:00:00Z", payload: { action: "closed", pull_request: { merged: true } } },
         { type: "PullRequestReviewEvent", actor: { login: "u1" }, created_at: "2026-07-09T09:00:00Z", payload: { action: "created" } },
+        { type: "PullRequestReviewEvent", actor: { login: "review-only" }, created_at: "2026-07-09T08:00:00Z", payload: { action: "created" } },
         { type: "IssuesEvent", actor: { login: "u2" }, created_at: "2026-07-08T09:00:00Z", payload: { action: "closed", issue: {} } },
         { type: "IssuesEvent", actor: { login: "u2" }, created_at: "2026-06-01T09:00:00Z", payload: { action: "closed", issue: {} } },
       ]);
@@ -40,7 +41,8 @@ describe("collectRepositoryStats", () => {
     expect(stats.contributors).toHaveLength(8);
     expect(stats.contributors[0]).toMatchObject({ login: "u0", recentCommits: 2, pullRequests: 1, reviews: 0 });
     expect(stats.contributors.find(({ login }) => login === "u1")).toMatchObject({ reviews: 1 });
-    expect(stats).toMatchObject({ mergedPullRequests30d: 1, closedIssues30d: 1, reviews30d: 1 });
+    expect(stats.contributors.find(({ login }) => login === "review-only")).toMatchObject({ contributions: 0, reviews: 1 });
+    expect(stats).toMatchObject({ mergedPullRequests30d: 1, closedIssues30d: 1, reviews30d: 2 });
     expect(stats.languages).toHaveLength(4);
     expect(stats.languages[0]).toMatchObject({ name: "TypeScript", share: 700 / 1075 });
     expect(stats.latestRelease?.tag).toBe("v1.0.0");
