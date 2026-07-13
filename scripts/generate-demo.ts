@@ -27,16 +27,17 @@ const stats: RepositoryStats = {
 };
 
 const destination = resolve('examples/generated');
+const canonicalCreatures = CREATURES.filter((creature) => creature !== 'fish');
 await mkdir(destination, { recursive: true });
 for (const theme of THEMES) {
   await writeFile(
     resolve(destination, `aquarium-${theme}.svg`),
-    renderAquarium(theme, stats, { creatures: [...CREATURES] }),
+    renderAquarium(theme, stats, { creatures: canonicalCreatures }),
     'utf8',
   );
 }
 await writeFile(
   resolve(destination, 'summary.json'),
-  `${JSON.stringify({ ...stats, configuration: { themes: THEMES, creatures: CREATURES } }, null, 2)}\n`,
+  `${JSON.stringify({ ...stats, configuration: { themes: THEMES, creatures: canonicalCreatures } }, null, 2)}\n`,
   'utf8',
 );

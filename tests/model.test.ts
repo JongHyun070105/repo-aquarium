@@ -92,7 +92,7 @@ describe("normalizeCiState", () => {
 });
 
 describe("public render choices", () => {
-  it("publishes the complete v1.1 theme and creature sets", () => {
+  it("publishes the complete theme and creature sets", () => {
     expect(THEMES).toEqual([
       "coral-day",
       "deep-ocean",
@@ -102,6 +102,7 @@ describe("public render choices", () => {
       "neon-cyber",
     ]);
     expect(CREATURES).toEqual([
+      "contributors",
       "fish",
       "jellyfish",
       "crab",

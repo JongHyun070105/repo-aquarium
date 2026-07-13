@@ -1,18 +1,18 @@
 # Repo Aquarium
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/JongHyun070105/repo-aquarium/aquarium-output/aquarium-github-dark.svg?v=1.2.1">
-  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/JongHyun070105/repo-aquarium/aquarium-output/aquarium-coral-day.svg?v=1.2.1">
-  <img alt="Repo Aquarium living world showing evolving contributors, repository phenomena, and theme characters" src="https://raw.githubusercontent.com/JongHyun070105/repo-aquarium/aquarium-output/aquarium-coral-day.svg?v=1.2.1" width="900">
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/JongHyun070105/repo-aquarium/aquarium-output/aquarium-github-dark.svg?v=1.3.0">
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/JongHyun070105/repo-aquarium/aquarium-output/aquarium-coral-day.svg?v=1.3.0">
+  <img alt="Repo Aquarium living world showing theme-native roaming contributors, repository phenomena, and world characters" src="https://raw.githubusercontent.com/JongHyun070105/repo-aquarium/aquarium-output/aquarium-coral-day.svg?v=1.3.0" width="900">
 </picture>
 
 Turn a GitHub repository's recent activity into a living pixel-art aquarium. Repo Aquarium is a reusable GitHub Action and local CLI: no hosted service, account, database, analytics, or tracking.
 
 [한국어 문서](docs/README.ko.md) · [Privacy](docs/privacy.md) · [Example workflow](examples/repo-aquarium.yml)
 
-## v1.2 — Living worlds
+## v1.3 — Theme-native roaming cast
 
-- Every theme now has its own world character and contributor sprite style: coral sprites, abyss lantern keepers, Octocat divers, sunset skyfins, polar penguins, and neon maintenance drones.
+- Every theme gives contributors a different non-fish form: reef turtles, abyss octopods, Octocat divers, sunset skyfins, polar penguins, and neon maintenance drones.
 - A release summons a legendary whale—or a kraken in Deep Ocean—for seven days.
 - Contributor creatures evolve through three stages from weighted commit, merged-PR, and review activity.
 - Recent merges become meteor showers, closed issues become auroras, reviews become constellations, and a failed selected CI workflow becomes a storm.
@@ -51,7 +51,7 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           themes: coral-day,github-dark
-          creatures: fish,jellyfish,crab
+          creatures: contributors,jellyfish,crab
           # Optional: show the latest default-branch result on the CI buoy.
           # ci-workflow: ci.yml
 ```
@@ -70,39 +70,39 @@ Replace `OWNER/REPOSITORY` with your repository path. The workflow needs `conten
 
 ## Themes
 
-| Theme | Scene |
-| --- | --- |
-| `coral-day` | Coral sprite, tropical contributor species, and a release whale |
-| `deep-ocean` | Abyss lantern keeper, bioluminescent contributors, and a release kraken |
-| `github-dark` | Octocat code diver, code-pattern fish, and green activity phenomena |
-| `sunset-lagoon` | Sunset skyfin, warm contributor species, and a golden release whale |
-| `arctic-ice` | Polar penguin, ice-pattern species, and a glacial release whale |
-| `neon-cyber` | Maintenance drone, cyber contributors, neon grid, and mecha whale |
+| Theme | Contributor form | Extra world cast |
+| --- | --- | --- |
+| `coral-day` | Reef turtles | Coral sprite and release whale |
+| `deep-ocean` | Abyss octopods | Lantern keeper and release kraken |
+| `github-dark` | Octocat divers | Code-world Octocat and green activity phenomena |
+| `sunset-lagoon` | Sunset skyfins | Skyfin guide and golden release whale |
+| `arctic-ice` | Polar penguins | Penguin guide and glacial release whale |
+| `neon-cyber` | Maintenance drones | Drone guide, neon grid, and mecha whale |
 
 <p>
-  <img alt="Coral Day living world with a coral sprite and legendary whale" src="https://raw.githubusercontent.com/JongHyun070105/repo-aquarium/aquarium-output/aquarium-coral-day.svg?v=1.2.1" width="49%">
-  <img alt="Deep Ocean living world with an abyss keeper and legendary kraken" src="https://raw.githubusercontent.com/JongHyun070105/repo-aquarium/aquarium-output/aquarium-deep-ocean.svg?v=1.2.1" width="49%">
+  <img alt="Coral Day living world with reef-turtle contributors, a coral sprite, and a legendary whale" src="https://raw.githubusercontent.com/JongHyun070105/repo-aquarium/aquarium-output/aquarium-coral-day.svg?v=1.3.0" width="49%">
+  <img alt="Deep Ocean living world with octopod contributors, an abyss keeper, and a legendary kraken" src="https://raw.githubusercontent.com/JongHyun070105/repo-aquarium/aquarium-output/aquarium-deep-ocean.svg?v=1.3.0" width="49%">
 </p>
 <p>
-  <img alt="GitHub Dark living world with an Octocat code diver" src="https://raw.githubusercontent.com/JongHyun070105/repo-aquarium/aquarium-output/aquarium-github-dark.svg?v=1.2.1" width="49%">
-  <img alt="Sunset Lagoon living world with a skyfin and golden whale" src="https://raw.githubusercontent.com/JongHyun070105/repo-aquarium/aquarium-output/aquarium-sunset-lagoon.svg?v=1.2.1" width="49%">
+  <img alt="GitHub Dark living world with roaming Octocat contributors" src="https://raw.githubusercontent.com/JongHyun070105/repo-aquarium/aquarium-output/aquarium-github-dark.svg?v=1.3.0" width="49%">
+  <img alt="Sunset Lagoon living world with roaming skyfin contributors and a golden whale" src="https://raw.githubusercontent.com/JongHyun070105/repo-aquarium/aquarium-output/aquarium-sunset-lagoon.svg?v=1.3.0" width="49%">
 </p>
 <p>
-  <img alt="Arctic Ice living world with a polar penguin and glacial whale" src="https://raw.githubusercontent.com/JongHyun070105/repo-aquarium/aquarium-output/aquarium-arctic-ice.svg?v=1.2.1" width="49%">
-  <img alt="Neon Cyber living world with a maintenance drone and mecha whale" src="https://raw.githubusercontent.com/JongHyun070105/repo-aquarium/aquarium-output/aquarium-neon-cyber.svg?v=1.2.1" width="49%">
+  <img alt="Arctic Ice living world with roaming penguin contributors and a glacial whale" src="https://raw.githubusercontent.com/JongHyun070105/repo-aquarium/aquarium-output/aquarium-arctic-ice.svg?v=1.3.0" width="49%">
+  <img alt="Neon Cyber living world with roaming drone contributors and a mecha whale" src="https://raw.githubusercontent.com/JongHyun070105/repo-aquarium/aquarium-output/aquarium-neon-cyber.svg?v=1.3.0" width="49%">
 </p>
 
 Each 900×320 SVG uses integer coordinates and crisp pixel edges. It includes an accessible title and description, visible text for CI state, and a finished static scene when `prefers-reduced-motion` is enabled.
 
-## Creatures
+## Cast selection
 
-Use a comma-separated list to decide which creatures are rendered. Allowed values are `fish`, `jellyfish`, `crab`, `turtle`, `seahorse`, `octopus`, `ray`, `pufferfish`, and `starfish`. The default is `fish,jellyfish,crab`; order is ignored and repeated values are removed.
+Use a comma-separated list to decide which cast members are rendered. `contributors` renders repository contributors in forms selected by the theme—turtles, octopods, Octocats, skyfins, penguins, or drones. The remaining values are `jellyfish`, `crab`, `turtle`, `seahorse`, `octopus`, `ray`, `pufferfish`, and `starfish`. The default is `contributors,jellyfish,crab`; the old `fish` value remains a compatibility alias for `contributors`.
 
 ```yaml
 with:
   github-token: ${{ secrets.GITHUB_TOKEN }}
   themes: coral-day,neon-cyber
-  creatures: fish,turtle,seahorse,octopus,ray,pufferfish,starfish
+  creatures: contributors,turtle,seahorse,octopus,ray,pufferfish,starfish
 ```
 
 ## What the aquarium means
@@ -111,9 +111,9 @@ Repo Aquarium maps repository data deterministically, so the same statistics pro
 
 | Repository signal | Aquarium detail |
 | --- | --- |
-| Commits in the last 30 days | Population, swim speed, bubble density, and contributor growth |
-| Up to 8 recent contributors | Named characters with three evolution stages |
-| Up to 4 languages at 1% or more | Fish species, colors, and the language legend |
+| Commits in the last 30 days | Population, roaming speed, bubble density, and contributor growth |
+| Up to 8 recent contributors | Named theme-specific characters with three evolution stages and multi-direction roaming |
+| Up to 4 languages at 1% or more | Contributor colors and the language legend |
 | Release from the last 7 days | Legendary whale, Deep Ocean kraken, or neon mecha whale |
 | Recent merged pull requests | Meteor shower intensity |
 | Recently closed issues | Aurora intensity |
@@ -124,9 +124,9 @@ Repo Aquarium maps repository data deterministically, so the same statistics pro
 | Time since the latest commit | Current strength and creature activity |
 | Optional workflow status | Buoy color, pixel icon, label, and signal pattern |
 
-The scene also contains animated waves, light rays, layered parallax, bubbles, schooling fish, moving tails, swaying plants, a pulsing jellyfish, a walking crab, shining pearls, and a CI signal buoy.
+The scene also contains animated waves, light rays, layered parallax, bubbles, freely roaming creatures, gently rooted plants, shining pearls, and a CI signal buoy. Contributors and ambient creatures change horizontal and vertical direction while remaining inside the protected world area.
 
-Languages below 1% of the repository total are treated as incidental and are excluded from both the header legend and fish-species selection. Among the remaining languages, Repo Aquarium uses up to the top four. Each contributor fish displays its contributor name so the living population can be matched back to the people building the repository.
+Languages below 1% of the repository total are treated as incidental and are excluded from both the header legend and contributor-form color selection. Among the remaining languages, Repo Aquarium uses up to the top four. Each contributor character displays its GitHub login.
 
 Repo event signals come from GitHub's repository events feed. The feed can be delayed, so merge, issue, review, and per-contributor evolution changes are intentionally deterministic snapshots rather than real-time telemetry. If event access is unavailable, Repo Aquarium still renders normally with zero event phenomena.
 
@@ -137,7 +137,7 @@ Repo event signals come from GitHub's repository events feed. The feed can be de
 | `github-token` | Yes | — | The consumer repository's `GITHUB_TOKEN` |
 | `repository` | No | Current repository | Repository to visualize as `owner/name` |
 | `themes` | No | `coral-day,github-dark` | Comma-separated themes to generate |
-| `creatures` | No | `fish,jellyfish,crab` | Comma-separated selection from the nine built-in creatures |
+| `creatures` | No | `contributors,jellyfish,crab` | Theme-specific contributors plus optional ambient creatures; `fish` is a legacy alias |
 | `ci-workflow` | No | — | Workflow file/name whose latest default-branch status appears on the buoy |
 | `publish-branch` | No | `aquarium-output` | Branch that receives generated files |
 | `title` | No | Repository name | Title shown inside the aquarium |
@@ -160,7 +160,7 @@ Generate an aquarium without installing a global package:
 npx --yes --package='github:JongHyun070105/repo-aquarium#v1' repo-aquarium generate \
   --repo owner/repository \
   --theme coral-day \
-  --creatures fish,turtle,seahorse,octopus \
+  --creatures contributors,turtle,seahorse,octopus \
   --output aquarium.svg
 ```
 
@@ -170,7 +170,7 @@ For public repositories, the CLI can use GitHub's unauthenticated API allowance.
 GITHUB_TOKEN=github_token npx --yes --package='github:JongHyun070105/repo-aquarium#v1' repo-aquarium generate \
   --repo owner/repository \
   --theme neon-cyber \
-  --creatures fish,jellyfish,ray,pufferfish,starfish \
+  --creatures contributors,jellyfish,ray,pufferfish,starfish \
   --output aquarium.svg
 ```
 

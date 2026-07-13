@@ -19,6 +19,23 @@ describe("parseGenerateArgs", () => {
     expect(parsed?.summary).toMatch(/build\/summary\.json$/);
   });
 
+  it("defaults to contributors and normalizes the legacy fish alias", () => {
+    const defaults = parseGenerateArgs([
+      "generate",
+      "--repo", "acme/tank",
+      "--output", "build/aquarium.svg",
+    ]);
+    const legacy = parseGenerateArgs([
+      "generate",
+      "--repo", "acme/tank",
+      "--creatures", "fish,contributors,crab",
+      "--output", "build/aquarium.svg",
+    ]);
+
+    expect(defaults?.creatures).toEqual(["contributors", "jellyfish", "crab"]);
+    expect(legacy?.creatures).toEqual(["contributors", "crab"]);
+  });
+
   it("rejects invalid repositories, themes and output extensions", () => {
     expect(() => parseGenerateArgs(["generate", "--repo", "nope", "--output", "a.svg"])).toThrow("owner/repository");
     expect(() => parseGenerateArgs(["generate", "--repo", "acme/tank", "--theme", "space", "--output", "a.svg"])).toThrow("Unknown theme");

@@ -8,6 +8,9 @@ export const THEMES = [
 ] as const;
 
 export const CREATURES = [
+  "contributors",
+  // Backward-compatible alias for contributors. Theme worlds no longer force
+  // every contributor to render as a fish.
   "fish",
   "jellyfish",
   "crab",

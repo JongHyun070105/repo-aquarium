@@ -1,6 +1,6 @@
 import { XMLParser } from "fast-xml-parser";
 import { describe, expect, it } from "vitest";
-import { renderAquarium } from "../src/render/index.js";
+import { renderAquarium, resolveCreatures } from "../src/render/index.js";
 import { CREATURES, THEMES } from "../src/model.js";
 import { activeStats, emptyStats } from "./fixtures/stats.js";
 
@@ -28,28 +28,64 @@ describe("renderAquarium", () => {
       expect(svg).toContain(`href="#${symbol}"`);
     }
     expect(svg).toContain('<symbol id="px-fish-0"');
-    expect(svg).toContain('href="#px-abyss-fish"');
-    for (const animation of ["surface", "ray", "drift", "rise", "swim", "tail", "twinkle", "jelly", "crab", "chest", "signal"]) {
+    expect(svg).toContain('data-contributor-form="octopus"');
+    expect(svg).toContain('href="#octopus"');
+    for (const animation of ["surface", "ray", "drift", "rise", "roam-a", "roam-b", "roam-c", "contributor-wander", "contributor-turn", "tail", "twinkle", "jelly", "crab", "chest", "signal"]) {
       expect(svg).toContain(`@keyframes ${animation}`);
     }
   });
 
-  it("defaults to contributor fish, jellyfish, and crab", () => {
+  it("defaults to theme-specific contributors, jellyfish, and crab", () => {
     const svg = renderAquarium("coral-day", activeStats);
 
-    expect(svg).toContain('href="#px-fish-');
+    expect(svg).toContain('data-contributor-form="turtle"');
+    expect(svg).toContain('href="#turtle"');
     expect(svg).toContain('data-creature="jellyfish"');
     expect(svg).toContain('data-creature="crab"');
     expect(svg).not.toContain('data-creature="turtle"');
   });
 
-  it("renders every contributor name as visible text attached to its fish", () => {
+  it("normalizes the legacy fish option and keeps each contributor name attached to its theme form", () => {
     const svg = renderAquarium("coral-day", activeStats, { creatures: ["fish"] });
 
+    expect(svg).toContain('data-contributor-form="turtle"');
+    expect(svg).not.toContain('href="#px-fish-');
     for (const { login } of activeStats.contributors) {
       expect(svg).toMatch(new RegExp(`<g class="swimmer[^>]*>[^<]*(?:<[^>]+>[^<]*)*<text[^>]*>${login}</text>`));
     }
     expect([...svg.matchAll(/<text[^>]*class="[^"]*fish-name[^"]*"[^>]*>/g)]).toHaveLength(activeStats.contributors.length);
+  });
+
+  it("normalizes and deduplicates the legacy fish alias", () => {
+    expect(resolveCreatures(["fish", "contributors", "crab"])).toEqual(["contributors", "crab"]);
+    expect(resolveCreatures()).toEqual(["contributors", "jellyfish", "crab"]);
+  });
+
+  it.each([
+    ["coral-day", "turtle"],
+    ["deep-ocean", "octopus"],
+    ["github-dark", "theme-octocat"],
+    ["sunset-lagoon", "theme-sunbird"],
+    ["arctic-ice", "theme-penguin"],
+    ["neon-cyber", "theme-drone"],
+  ] as const)("maps %s contributors to the %s form", (theme, form) => {
+    const svg = renderAquarium(theme, activeStats, { creatures: ["contributors"] });
+
+    expect(svg).toContain(`data-contributor-form="${form}"`);
+    expect(svg).toContain(`href="#${form}"`);
+    expect(svg).toContain('class="swimmer contributor-wander');
+    expect(svg).toContain('class="contributor-facing"');
+  });
+
+  it("keeps language-derived contributor colors on every theme-native form", () => {
+    const svg = renderAquarium("coral-day", activeStats, { creatures: ["contributors"] });
+    const bodyColors = [...svg.matchAll(/<use href="#turtle"[^>]*style="--body:(#[0-9a-f]+);/g)]
+      .map((match) => match[1]);
+
+    expect(svg).toContain('fill="var(--body,');
+    expect(svg).toContain('fill="var(--accent,');
+    expect(bodyColors).toHaveLength(activeStats.contributors.length);
+    expect(new Set(bodyColors).size).toBeGreaterThan(1);
   });
 
   it("does not render a language legend entry below one percent", () => {
@@ -71,7 +107,7 @@ describe("renderAquarium", () => {
     const svg = renderAquarium("sunset-lagoon", activeStats, { creatures: [...CREATURES] });
     const symbols = ["turtle", "seahorse", "octopus", "ray", "pufferfish", "starfish"];
 
-    for (const creature of CREATURES.filter((value) => value !== "fish")) {
+    for (const creature of CREATURES.filter((value) => value !== "fish" && value !== "contributors")) {
       expect(svg).toContain(`data-creature="${creature}"`);
     }
     for (const symbol of symbols) {
@@ -135,13 +171,15 @@ describe("renderAquarium", () => {
 
   it("keeps positioned creature anchors separate from animated inner groups", () => {
     const svg = renderAquarium("neon-cyber", activeStats, { creatures: [...CREATURES] });
+    const ambientCount = 8;
 
-    for (const match of svg.matchAll(/<g data-creature="([^"]+)"[^>]*transform="translate\(([^)]+)\)"[^>]*><title>[^<]+<\/title><g class="([^"]+-motion)"/g)) {
+    for (const match of svg.matchAll(/<g data-creature="([^"]+)"[^>]*transform="translate\(([^)]+)\)"[^>]*><title>[^<]+<\/title><g class="free-roam roam-[012]"[^>]*><g class="([^"]+-motion)"/g)) {
       expect(match[1]).toBeTruthy();
       expect(match[2]).toBeTruthy();
       expect(match[3]).toBeTruthy();
     }
-    expect([...svg.matchAll(/data-creature=/g)]).toHaveLength(CREATURES.length - 1);
+    expect([...svg.matchAll(/data-creature=/g)]).toHaveLength(ambientCount);
+    expect([...svg.matchAll(/<g data-creature="[^"]+"[^>]*>.*?<g class="free-roam roam-[012]"/g)]).toHaveLength(ambientCount);
     expect(svg).not.toMatch(/<g class="(?:jelly|crab|turtle|seahorse|octopus|ray|puffer|starfish)-motion"[^>]*transform="translate/);
     expect(svg).toContain('transform="translate(52 220)"><g class="plant-motion"');
     expect(svg).toContain('transform="translate(590 209)"><g class="plant-motion alt"');
@@ -157,16 +195,31 @@ describe("renderAquarium", () => {
     expect(svg).toContain('class="plant-root"');
     expect(svg).toContain('class="plant-mound"');
     expect(svg).not.toContain('.near{animation:');
+    expect(sway).toContain("skewX(-2.5deg)");
+    expect(sway).toContain("skewX(2.5deg)");
     expect(sway).toContain("skewX(");
     expect(sway).not.toMatch(/translate[XY]?\(/);
+  });
+
+  it("keeps contributors moving across multi-direction waypoints and turns their sprite", () => {
+    const svg = renderAquarium("github-dark", activeStats, { creatures: ["contributors"] });
+    const contributor = svg.match(/<g class="swimmer contributor-wander[^>]+>/)?.[0] ?? "";
+
+    for (const variable of ["--x0:", "--x1:", "--x2:", "--x3:", "--y0:", "--y1:", "--y2:", "--y3:"]) {
+      expect(contributor).toContain(variable);
+    }
+    expect(svg).toContain("@keyframes contributor-wander");
+    expect(svg).toContain("@keyframes contributor-turn");
+    expect(svg).toContain("50%,99%{transform:scaleX(-1)}");
   });
 
   it("keeps every ambient creature below the protected header and inside the tank at motion extremes", () => {
     const svg = renderAquarium("coral-day", activeStats, { creatures: [...CREATURES] });
     const openingTags = [...svg.matchAll(/<g data-creature="[^"]+"[^>]+>/g)].map(([tag]) => tag);
+    const ambientCount = 8;
 
     expect(svg).toContain('<clipPath id="water-zone-coral-day"><rect x="8" y="88" width="884" height="224"/></clipPath>');
-    expect(openingTags).toHaveLength(CREATURES.length - 1);
+    expect(openingTags).toHaveLength(ambientCount);
     for (const tag of openingTags) {
       const number = (name: string): number => Number(tag.match(new RegExp(`${name}="(-?[\\d.]+)"`))?.[1]);
       const x = number("data-anchor-x");
