@@ -25,7 +25,7 @@ export function parseThemes(value: string): Theme[] {
 }
 
 export function parseCreatures(value: string): Creature[] {
-  const requested = (value || "fish,jellyfish,crab")
+  const requested = (value || "contributors,jellyfish,crab")
     .split(",")
     .map((creature) => creature.trim())
     .filter(Boolean);
@@ -36,7 +36,7 @@ export function parseCreatures(value: string): Creature[] {
       throw new Error(`Unknown creature "${creature}". Choose from: ${CREATURES.join(", ")}.`);
     }
   }
-  return unique as Creature[];
+  return [...new Set(unique.map((creature) => creature === "fish" ? "contributors" : creature))] as Creature[];
 }
 
 export async function runAction(): Promise<void> {

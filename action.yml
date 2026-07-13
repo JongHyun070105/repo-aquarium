@@ -16,9 +16,9 @@ inputs:
     required: false
     default: coral-day,github-dark
   creatures:
-    description: Comma-separated creatures to include in the scene.
+    description: Comma-separated cast. Use contributors for theme-specific contributor forms; fish remains a legacy alias.
     required: false
-    default: fish,jellyfish,crab
+    default: contributors,jellyfish,crab
   ci-workflow:
     description: Optional workflow filename or name whose latest default-branch status is shown.
     required: false

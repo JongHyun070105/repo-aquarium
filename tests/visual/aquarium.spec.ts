@@ -5,13 +5,15 @@ import { activeStats } from '../fixtures/stats.js';
 for (const theme of THEMES) {
   test(`${theme} visual scene and animation`, async ({ page }) => {
     await page.setViewportSize({ width: 900, height: 320 });
+    await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.setContent(renderAquarium(theme, activeStats));
 
     await expect(page.locator('svg')).toHaveScreenshot(`${theme}.png`, {
-      animations: 'disabled',
       maxDiffPixelRatio: 0.03,
     });
 
+    await page.emulateMedia({ reducedMotion: 'no-preference' });
+    await page.setContent(renderAquarium(theme, activeStats));
     const start = await page.locator('svg').screenshot();
     await page.waitForTimeout(700);
     const middle = await page.locator('svg').screenshot();
@@ -93,12 +95,77 @@ test('plants sway while their roots remain fixed to the aquarium floor', async (
   )).toBe(true);
 });
 
+test('contributors roam vertically, reverse direction, and turn their sprite', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await page.setViewportSize({ width: 900, height: 320 });
+  await page.setContent(renderAquarium('neon-cyber', activeStats, { creatures: ['contributors'] }));
+
+  const frames = await page.locator('.contributor-wander').first().evaluate(async (contributor) => {
+    contributor.setAttribute('style', `${contributor.getAttribute('style') ?? ''};--swim:4s;--delay:0s`);
+    const facing = contributor.querySelector('.contributor-facing');
+    const roam = contributor.getAnimations().find((animation) =>
+      (animation as CSSAnimation).animationName === 'contributor-wander');
+    const turn = facing?.getAnimations().find((animation) =>
+      (animation as CSSAnimation).animationName === 'contributor-turn');
+    if (!roam || !turn || !facing) throw new Error('Contributor motion animations were not found.');
+    roam.pause();
+    turn.pause();
+
+    const sample = async (time: number) => {
+      roam.currentTime = time;
+      turn.currentTime = time;
+      await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+      const box = contributor.getBoundingClientRect();
+      return { x: box.x, y: box.y, facing: getComputedStyle(facing).transform };
+    };
+
+    return [await sample(0), await sample(1_000), await sample(2_000), await sample(3_000)];
+  });
+
+  expect(frames[1]!.x).toBeGreaterThan(frames[0]!.x);
+  expect(frames[2]!.x).toBeGreaterThan(frames[1]!.x);
+  expect(frames[3]!.x).toBeLessThan(frames[2]!.x);
+  expect(new Set(frames.map(({ y }) => Math.round(y))).size).toBeGreaterThan(1);
+  expect(frames[0]!.facing).not.toBe(frames[2]!.facing);
+});
+
+test('every ambient creature traverses the water instead of idling in place', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await page.setViewportSize({ width: 900, height: 320 });
+  await page.setContent(renderAquarium('coral-day', activeStats, {
+    creatures: ['jellyfish', 'crab', 'turtle', 'seahorse', 'octopus', 'ray', 'pufferfish', 'starfish'],
+  }));
+
+  const movement = await page.locator('[data-creature] > .free-roam').evaluateAll(async (creatures) =>
+    Promise.all(creatures.map(async (creature) => {
+      const animation = creature.getAnimations().find((candidate) =>
+        (candidate as CSSAnimation).animationName.startsWith('roam-'));
+      if (!animation) throw new Error('Ambient roaming animation was not found.');
+      animation.pause();
+      const duration = Number(animation.effect?.getTiming().duration);
+      animation.currentTime = 0;
+      await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+      const start = creature.getBoundingClientRect();
+      animation.currentTime = duration / 2;
+      await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+      const middle = creature.getBoundingClientRect();
+      return { dx: Math.abs(middle.x - start.x), dy: Math.abs(middle.y - start.y) };
+    })),
+  );
+
+  expect(movement).toHaveLength(8);
+  for (const delta of movement) {
+    expect(delta.dx).toBeGreaterThan(10);
+    expect(delta.dy).toBeGreaterThan(3);
+  }
+});
+
 test('failed CI creates a contained neon storm', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.setContent(renderAquarium('neon-cyber', {
     ...activeStats,
     ci: { workflow: 'CI', status: 'completed', conclusion: 'failure' },
-  }, { creatures: ['fish'] }));
+  }, { creatures: ['contributors'] }));
 
   await expect(page.locator('[data-phenomenon="ci-storm"]')).toHaveCount(1);
   await expect(page.locator('[data-theme-character="theme-drone"]')).toHaveCount(1);

@@ -24,7 +24,7 @@ Usage:
 Options:
   --repo <owner/repository>  Public or token-accessible repository (required)
   --theme <name>             One of the six built-in aquarium themes
-  --creatures <list>         Comma-separated creatures (default: fish,jellyfish,crab)
+  --creatures <list>         Comma-separated cast (default: contributors,jellyfish,crab)
   --output <path>            SVG output path (required)
   --summary <path>           Stats JSON path (default: summary.json beside SVG)
   --title <text>             Override the aquarium title
@@ -62,7 +62,7 @@ export function parseGenerateArgs(argv: string[]): GenerateOptions | null {
   if (!(THEMES as readonly string[]).includes(theme)) {
     throw new Error(`Unknown theme "${theme}". Choose one of: ${THEMES.join(", ")}.`);
   }
-  const creatureValues = (values.get("--creatures") ?? "fish,jellyfish,crab")
+  const creatureValues = (values.get("--creatures") ?? "contributors,jellyfish,crab")
     .split(",")
     .map((creature) => creature.trim())
     .filter(Boolean);
@@ -82,7 +82,7 @@ export function parseGenerateArgs(argv: string[]): GenerateOptions | null {
     summary: summaryOption ? resolve(summaryOption) : resolve(dirname(absoluteOutput), "summary.json"),
     title: values.get("--title"),
     ciWorkflow: values.get("--ci-workflow"),
-    creatures: creatures as Creature[],
+    creatures: [...new Set(creatures.map((creature) => creature === "fish" ? "contributors" : creature))] as Creature[],
   };
 }
 
