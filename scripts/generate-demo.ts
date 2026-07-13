@@ -7,10 +7,13 @@ const stats: RepositoryStats = {
   title: 'Repo Aquarium',
   stars: 256,
   commits30d: 42,
+  mergedPullRequests30d: 4,
+  closedIssues30d: 3,
+  reviews30d: 6,
   contributors: [
-    { login: 'octonaut', contributions: 24 },
-    { login: 'coral-coder', contributions: 12 },
-    { login: 'pixel-diver', contributions: 6 },
+    { login: 'octonaut', contributions: 24, recentCommits: 9, pullRequests: 3, reviews: 4 },
+    { login: 'coral-coder', contributions: 12, recentCommits: 4, pullRequests: 1, reviews: 2 },
+    { login: 'pixel-diver', contributions: 6, recentCommits: 1, pullRequests: 0, reviews: 0 },
   ],
   languages: [
     { name: 'TypeScript', bytes: 88_000, share: 0.88 },

@@ -4,7 +4,7 @@ Repo Aquarium is designed to run without a hosted service or user tracking.
 
 ## Data it reads
 
-The action or CLI requests only the GitHub repository data needed to draw the selected scene: repository metadata, recent commits and contributors, language totals, latest release, and—when configured—the latest run of one workflow on the default branch.
+The action or CLI requests only the GitHub repository data needed to draw the selected scene: repository metadata, recent commits and contributors, language totals, latest release, the recent repository events feed used for merge/issue/review phenomena and contributor evolution, and—when configured—the latest run of one workflow on the default branch.
 
 ## Where data goes
 

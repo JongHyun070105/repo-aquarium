@@ -40,11 +40,11 @@ test('all configured creatures stay below the protected header while moving', as
   const assertSafeBounds = async () => {
     const scene = await page.locator('svg').evaluate((svg) => {
       const root = svg.getBoundingClientRect();
-      const elements = Array.from(svg.querySelectorAll('[data-creature], [data-scene-object="plant"]'));
+      const elements = Array.from(svg.querySelectorAll('[data-creature], [data-theme-character], [data-event], [data-scene-object="plant"]'));
       return elements.map((element) => {
         const rect = element.getBoundingClientRect();
         return {
-          name: element.getAttribute('data-creature') ?? element.getAttribute('data-scene-object'),
+          name: element.getAttribute('data-creature') ?? element.getAttribute('data-theme-character') ?? element.getAttribute('data-event') ?? element.getAttribute('data-scene-object'),
           left: rect.left - root.left,
           right: rect.right - root.left,
           top: rect.top - root.top,
@@ -91,4 +91,19 @@ test('plants sway while their roots remain fixed to the aquarium floor', async (
     Math.abs(position.left - (before[index]?.left ?? position.left)) > 0.5
       || Math.abs(position.top - (before[index]?.top ?? position.top)) > 0.5,
   )).toBe(true);
+});
+
+test('failed CI creates a contained neon storm', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.setContent(renderAquarium('neon-cyber', {
+    ...activeStats,
+    ci: { workflow: 'CI', status: 'completed', conclusion: 'failure' },
+  }, { creatures: ['fish'] }));
+
+  await expect(page.locator('[data-phenomenon="ci-storm"]')).toHaveCount(1);
+  await expect(page.locator('[data-theme-character="theme-drone"]')).toHaveCount(1);
+  await expect(page.locator('svg')).toHaveScreenshot('neon-cyber-ci-storm.png', {
+    animations: 'disabled',
+    maxDiffPixelRatio: 0.03,
+  });
 });

@@ -3,6 +3,9 @@ export type CiState = "success" | "failure" | "pending" | "unknown";
 export interface ContributorStat {
   login: string;
   contributions: number;
+  recentCommits: number;
+  pullRequests: number;
+  reviews: number;
   avatarUrl?: string;
 }
 
@@ -34,6 +37,9 @@ export interface RepositorySnapshot {
   defaultBranch: string;
   stars: number;
   commits30d: number;
+  mergedPullRequests30d: number;
+  closedIssues30d: number;
+  reviews30d: number;
   contributors: ContributorStat[];
   languages: LanguageStat[];
   latestRelease: ReleaseStat | null;

@@ -16,6 +16,10 @@ describe("normalizeStats", () => {
     expect(first.pearlCount).toBeGreaterThan(1);
     expect(first.chestOpen).toBe(true);
     expect(first.ciState).toBe("success");
+    expect(first.legendaryVisible).toBe(true);
+    expect(first.mergedPullRequests30d).toBe(5);
+    expect(first.fish.map(({ evolutionStage }) => evolutionStage)).toContain(3);
+    expect(first.fish.map(({ evolutionStage }) => evolutionStage)).toContain(1);
   });
 
   it("provides a complete but quiet scene when GitHub has no data", () => {
@@ -63,6 +67,14 @@ describe("normalizeStats", () => {
     expect(one).toBeLessThan(hundred);
     expect(hundred).toBeLessThan(million);
     expect(million).toBeLessThanOrEqual(14);
+  });
+
+  it("shows legendary release creatures for seven days only", () => {
+    const recent = normalizeStats({ ...activeStats, latestRelease: { tagName: "v2", publishedAt: "2026-07-06T12:00:00.000Z" } });
+    const old = normalizeStats({ ...activeStats, latestRelease: { tagName: "v1", publishedAt: "2026-07-04T11:59:59.000Z" } });
+
+    expect(recent.legendaryVisible).toBe(true);
+    expect(old.legendaryVisible).toBe(false);
   });
 });
 

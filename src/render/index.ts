@@ -66,6 +66,19 @@ const symbolDefs = (palette: ThemePalette): string => `
   <symbol id="ray" viewBox="0 0 72 38"><path d="M4 21 22 8h28l18 13-18 10H22z" fill="${palette.rockLight}"/><path d="M17 16h38v9H17z" fill="${palette.glass}" opacity=".55"/><path d="m36 29 7 9H31z" fill="${palette.rock}"/><path d="M23 13h5v5h-5zm21 0h5v5h-5z" fill="${palette.outline}"/><path d="M25 13h2v2h-2zm21 0h2v2h-2z" fill="#fff"/></symbol>
   <symbol id="pufferfish" viewBox="0 0 48 42"><path d="M10 9h6V4h20v5h6v6h5v15h-5v6h-6v5H16v-5h-6v-6H5V15h5z" fill="${palette.glow}"/><path d="M0 21 8 13v16zM17 4 21 0l4 4zm12 0 4-4 3 5zM16 38l5 4 4-5zm16-1 3 5 4-6z" fill="${palette.coralLight}"/><path d="M34 13h7v7h-7z" fill="${palette.outline}"/><path d="M36 13h2v2h-2z" fill="#fff"/><path d="M37 25h8v3h-8z" fill="${palette.outline}"/></symbol>
   <symbol id="starfish" viewBox="0 0 38 38"><path d="m19 0 5 12 13-4-8 11 9 10-14-3-5 12-5-12-14 3 9-10L1 8l13 4z" fill="${palette.coral}"/><path d="M16 14h6v6h-6zm-4 9h4v4h-4zm12 0h4v4h-4z" fill="${palette.coralLight}"/></symbol>
+  <symbol id="px-abyss-fish" viewBox="0 0 64 32"><path class="tail" d="M16 16 3 5v22z" fill="var(--fin)"/><path d="M14 10h9V6h25v4h8v5h7v7h-7v4H23v-4h-9z" fill="currentColor"/><path d="M24 10h23v4H24z" fill="var(--shine)" opacity=".45"/><path d="M48 13h6v6h-6z" fill="${palette.outline}"/><path d="M51 14h2v2h-2z" fill="${palette.glow}"/><path d="M58 12h4v2h-4zm4-4h2v4h-2z" fill="${palette.glow}"/></symbol>
+  <symbol id="px-code-fish" viewBox="0 0 64 32"><path class="tail" d="M16 16 3 7v18z" fill="var(--fin)"/><path d="M15 9h10V5h24v4h8v5h6v8h-6v5H25v-4H15z" fill="currentColor"/><path d="M24 10h7v4h-7zm10 0h14v4H34zm-10 8h18v4H24z" fill="var(--shine)"/><path d="M49 13h5v5h-5z" fill="${palette.outline}"/></symbol>
+  <symbol id="px-sunset-fish" viewBox="0 0 64 32"><path class="tail" d="M17 16 2 4l6 12-6 12z" fill="var(--fin)"/><path d="M15 11h9V6h27v5h7v4h5v7h-5v4h-7v3H24v-3h-9z" fill="currentColor"/><path d="M24 7h21v5H24zm0 11h27v4H24z" fill="var(--shine)" opacity=".75"/><path d="M50 13h5v5h-5z" fill="${palette.outline}"/></symbol>
+  <symbol id="px-ice-fish" viewBox="0 0 64 32"><path class="tail" d="M17 16 4 6v20z" fill="var(--fin)"/><path d="M15 10h10V6h26v4h7v5h5v7h-5v4h-8v3H25v-3H15z" fill="currentColor"/><path d="M24 7h18l8 5H24zm5 13h19v4H29z" fill="var(--shine)" opacity=".85"/><path d="M50 13h5v5h-5z" fill="${palette.outline}"/></symbol>
+  <symbol id="px-cyber-fish" viewBox="0 0 64 32"><path class="tail" d="M17 16 3 5h6l10 7v8L9 27H3z" fill="var(--fin)"/><path d="M16 9h9V5h25v4h8v5h5v8h-5v5h-8v3H25v-4h-9z" fill="currentColor"/><path d="M23 10h9v4h-9zm13 0h13v4H36zM25 19h22v3H25z" fill="var(--shine)"/><path d="M50 13h6v6h-6z" fill="${palette.outline}"/><path d="M52 14h3v3h-3z" fill="${palette.glow}"/></symbol>
+  <symbol id="theme-reef-sprite" viewBox="0 0 48 44"><path d="M8 17h5V9h7V4h9v5h7v8h5v13h-5v7h-7v5H18v-5h-7v-7H6V17z" fill="${palette.coralLight}"/><path d="M14 18h20v7H14z" fill="${palette.glow}"/><path d="M15 13h5v5h-5zm13 0h5v5h-5z" fill="${palette.outline}"/></symbol>
+  <symbol id="theme-angler" viewBox="0 0 62 44"><path d="M13 12h10V7h23v5h8v6h6v14h-6v5h-8v4H23v-4H13z" fill="${palette.rockLight}"/><path d="M13 22 2 10v25z" fill="${palette.coral}"/><path d="M44 16h7v7h-7z" fill="${palette.outline}"/><path d="M47 17h3v3h-3z" fill="${palette.glow}"/><path d="M49 11V5h8V1h4v8h-8v4z" fill="${palette.glow}"/></symbol>
+  <symbol id="theme-octocat" viewBox="0 0 52 52"><path d="m11 13 5-11 8 8h8l8-8 3 12 5 7v18h-7v8h-9v4H20v-4h-9v-8H4V21z" fill="${palette.text}"/><path d="M14 20h24v17H14z" fill="${palette.rockLight}"/><path d="M17 23h6v6h-6zm13 0h6v6h-6z" fill="${palette.outline}"/><path d="M20 35h12v4H20z" fill="${palette.glow}"/></symbol>
+  <symbol id="theme-sunbird" viewBox="0 0 58 42"><path d="M7 18h13l8-9h10l6 6h9v13h-9l-8 8H20l-7-7H2z" fill="${palette.coralLight}"/><path d="m21 18 8-16 9 16z" fill="${palette.glow}"/><path d="M42 18h7v6h-7z" fill="${palette.outline}"/><path d="m6 18-6-8v22l8-5z" fill="${palette.coral}"/></symbol>
+  <symbol id="theme-penguin" viewBox="0 0 42 56"><path d="M10 8h5V3h13v5h5v7h5v28h-5v8h-7v4H16v-4H9v-8H4V15h6z" fill="${palette.outline}"/><path d="M13 17h16v8h5v18h-5v7H13v-7H8V25h5z" fill="#f5fbff"/><path d="M14 12h5v5h-5zm10 0h5v5h-5z" fill="${palette.glow}"/><path d="m19 20 5 4-5 4z" fill="${palette.coralLight}"/></symbol>
+  <symbol id="theme-drone" viewBox="0 0 62 42"><path d="M12 12h38v22H12z" fill="${palette.rock}"/><path d="M17 8h28v4H17zm0 26h28v4H17z" fill="${palette.glow}"/><path d="M18 17h9v9h-9zm17 0h9v9h-9z" fill="${palette.outline}"/><path d="M21 19h4v4h-4zm17 0h4v4h-4z" fill="${palette.glow}"/><path d="M3 5h17v4H3zm39 0h17v4H42zM7 1h4v12H7zm44 0h4v12h-4z" fill="${palette.coralLight}"/><path d="M26 29h10v4H26z" fill="${palette.glow}"/></symbol>
+  <symbol id="legend-whale" viewBox="0 0 220 88"><path d="M32 34h18V24h93v7h24v8h18v11h18v20h-18v8h-30v7H68v-7H44v-8H25V53H8V36h24z" fill="currentColor"/><path d="M143 31 166 8h16l-12 27zm27 4 23-22h17l-18 31z" fill="var(--fin)"/><path d="M48 50h16v8H48z" fill="var(--shine)"/><path d="M156 46h10v10h-10z" fill="${palette.outline}"/></symbol>
+  <symbol id="legend-kraken" viewBox="0 0 150 104"><path d="M35 12h12V5h56v7h12v12h10v42H25V24h10z" fill="currentColor"/><path d="M45 28h14v14H45zm45 0h14v14H90z" fill="${palette.outline}"/><path d="M49 30h5v5h-5zm45 0h5v5h-5z" fill="${palette.glow}"/><path d="M28 63h18v25H35v14H18V91h9zm28 0h16v41H56zm26 0h16v41H82zm26 0h18v28h9v11h-20V88h-7z" fill="var(--fin)"/></symbol>
 `;
 
 const bubbles = (model: AquariumModel): string => Array.from({ length: model.bubbleCount }, (_, index) => {
@@ -76,7 +89,26 @@ const bubbles = (model: AquariumModel): string => Array.from({ length: model.bub
   return `<use href="#bubble" x="${x}" y="${y}" width="${size}" height="${size}" class="bubble b${index % 4}" style="--rise:${duration}s;--wait:-${(index % 11) * 0.7}s"/>`;
 }).join("");
 
-const fish = (model: AquariumModel, palette: ThemePalette): string => model.fish.map((item, index) => {
+const fishSymbol = (theme: Theme, species: number): string => {
+  if (theme === "deep-ocean") return "px-abyss-fish";
+  if (theme === "github-dark") return "px-code-fish";
+  if (theme === "sunset-lagoon") return "px-sunset-fish";
+  if (theme === "arctic-ice") return "px-ice-fish";
+  if (theme === "neon-cyber") return "px-cyber-fish";
+  return `px-fish-${species}`;
+};
+
+const evolutionMark = (stage: 1 | 2 | 3, palette: ThemePalette): string => {
+  if (stage === 3) {
+    return `<g class="evolution-mark" data-evolution="guardian"><path d="M18 5 23 0l5 5 6-5 5 5v6H18z" fill="${palette.glow}"/><path d="M20 8h17v4H20z" fill="${palette.coralLight}"/></g>`;
+  }
+  if (stage === 2) {
+    return `<g class="evolution-mark" data-evolution="adept"><path d="M54 23h6v6h-6z" fill="${palette.glow}"/><path d="M56 19h2v14h-2zm-4 6h10v2H52z" fill="${palette.coralLight}"/></g>`;
+  }
+  return `<g class="evolution-mark" data-evolution="hatchling"><path d="M55 25h5v5h-5z" fill="${palette.glow}"/></g>`;
+};
+
+const fish = (theme: Theme, model: AquariumModel, palette: ThemePalette): string => model.fish.map((item, index) => {
   const y = 106 + item.lane * 31 + (index % 2) * 5;
   const color = palette.fish[item.colorIndex];
   const fin = item.colorIndex % 2 === 0 ? palette.coralLight : palette.glow;
@@ -84,7 +116,7 @@ const fish = (model: AquariumModel, palette: ThemePalette): string => model.fish
   const reverse = item.reverse ? " reverse" : "";
   const restingX = item.reverse ? 680 - index * 72 : 72 + index * 82;
   const labelWidth = Math.min(120, Math.max(32, item.label.length * 6 + 8));
-  return `<g class="swimmer${reverse}" data-contributor="${escapeXml(item.label)}" style="--swim:${item.speedSeconds}s;--delay:${item.delaySeconds}s;--lane:${y}px;--rest:${restingX}px;--scale:${item.scale}"><title>${escapeXml(item.label)} · ${escapeXml(item.language)}</title><use href="#px-fish-${item.species}" width="64" height="32" style="color:${color};--fin:${fin};--shine:${shine}"/><g class="fish-nameplate" transform="translate(32 -2)"><rect x="-${labelWidth / 2}" y="-12" width="${labelWidth}" height="11" rx="2"/><text class="fish-name" y="-4" text-anchor="middle" textLength="${Math.min(labelWidth - 8, item.label.length * 6)}" lengthAdjust="spacingAndGlyphs">${escapeXml(item.label)}</text></g></g>`;
+  return `<g class="swimmer stage-${item.evolutionStage}${reverse}" data-contributor="${escapeXml(item.label)}" data-evolution-stage="${item.evolutionStage}" data-activity-points="${item.activityPoints}" style="--swim:${item.speedSeconds}s;--delay:${item.delaySeconds}s;--lane:${y}px;--rest:${restingX}px;--scale:${item.scale}"><title>${escapeXml(item.label)} · evolution ${item.evolutionStage} · ${escapeXml(item.activityLabel)} · ${escapeXml(item.language)}</title><use href="#${fishSymbol(theme, item.species)}" width="64" height="32" style="color:${color};--fin:${fin};--shine:${shine}"/>${evolutionMark(item.evolutionStage, palette)}<g class="fish-nameplate" transform="translate(32 -2)"><rect x="-${labelWidth / 2}" y="-12" width="${labelWidth}" height="11" rx="2"/><text class="fish-name" y="-4" text-anchor="middle" textLength="${Math.min(labelWidth - 8, item.label.length * 6)}" lengthAdjust="spacingAndGlyphs">${escapeXml(item.label)}</text></g></g>`;
 }).join("");
 
 export const resolveCreatures = (creatures?: readonly Creature[]): Creature[] => {
@@ -156,6 +188,56 @@ const themeDecorations = (theme: Theme, palette: ThemePalette): string => {
   return "";
 };
 
+const themeCharacter = (theme: Theme): { symbol: string; label: string; x: number; y: number; width: number; height: number } => {
+  if (theme === "deep-ocean") return { symbol: "theme-angler", label: "Abyss lantern keeper", x: 126, y: 192, width: 62, height: 44 };
+  if (theme === "github-dark") return { symbol: "theme-octocat", label: "Octocat code diver", x: 118, y: 205, width: 52, height: 52 };
+  if (theme === "sunset-lagoon") return { symbol: "theme-sunbird", label: "Sunset skyfin", x: 130, y: 178, width: 58, height: 42 };
+  if (theme === "arctic-ice") return { symbol: "theme-penguin", label: "Polar repository penguin", x: 138, y: 210, width: 42, height: 56 };
+  if (theme === "neon-cyber") return { symbol: "theme-drone", label: "Neon maintenance drone", x: 124, y: 188, width: 62, height: 42 };
+  return { symbol: "theme-reef-sprite", label: "Coral reef sprite", x: 136, y: 198, width: 48, height: 44 };
+};
+
+const themeCast = (theme: Theme): string => {
+  const character = themeCharacter(theme);
+  return `<g data-theme-character="${character.symbol}" data-world="${theme}" transform="translate(${character.x} ${character.y})"><title>${character.label}</title><g class="theme-character"><use href="#${character.symbol}" width="${character.width}" height="${character.height}"/></g></g>`;
+};
+
+const legendaryCreature = (theme: Theme, model: AquariumModel, palette: ThemePalette): string => {
+  if (!model.legendaryVisible || !model.releaseLabel) return "";
+  const kraken = theme === "deep-ocean";
+  const symbol = kraken ? "legend-kraken" : "legend-whale";
+  const label = theme === "neon-cyber" ? "Legendary mecha whale" : kraken ? "Legendary release kraken" : "Legendary release whale";
+  const x = kraken ? 355 : 300;
+  const y = kraken ? 140 : 130;
+  const width = kraken ? 150 : 220;
+  const height = kraken ? 104 : 88;
+  const mechaOverlay = theme === "neon-cyber"
+    ? `<g data-mecha-upgrade="true" fill="${palette.glow}"><path d="M74 45h42v4H74zm46 0h18v4h-18zM96 34h5v15h-5zm47 10h13v4h-13z"/><path d="M64 55h8v8h-8zm83-10h8v8h-8z" fill="${palette.coralLight}"/></g>`
+    : "";
+  return `<g data-event="release-legendary" data-release="${escapeXml(model.releaseLabel)}" transform="translate(${x} ${y})" opacity=".28"><title>${label}: ${escapeXml(model.releaseLabel)} · visible for 7 days</title><g class="legendary"><use href="#${symbol}" width="${width}" height="${height}" style="color:${palette.coralLight};--fin:${palette.coral};--shine:${palette.glow}"/>${mechaOverlay}</g></g>`;
+};
+
+const repositoryPhenomena = (model: AquariumModel, palette: ThemePalette): string => {
+  const meteorCount = Math.min(6, model.mergedPullRequests30d);
+  const meteors = meteorCount > 0
+    ? `<g data-phenomenon="merge-meteor-shower"><title>${model.mergedPullRequests30d} merged pull requests in the recent event window</title>${Array.from({ length: meteorCount }, (_, index) => {
+      const x = 210 + index * 103;
+      const y = 106 + (index % 3) * 28;
+      return `<path class="meteor m${index}" d="M${x} ${y}h8l-21 21h-8z" fill="${palette.glow}"/>`;
+    }).join("")}</g>`
+    : "";
+  const aurora = model.closedIssues30d > 0
+    ? `<g data-phenomenon="issue-aurora" opacity=".34"><title>${model.closedIssues30d} issues closed in the recent event window</title><path class="aurora" d="M45 124c95-35 155 34 250 0s155 32 250 0 155 30 310-4v25c-120 32-192-18-296 12s-160-27-258 3S137 139 45 166z" fill="${palette.plantLight}"/></g>`
+    : "";
+  const reviews = model.reviews30d > 0
+    ? `<g data-phenomenon="review-constellation"><title>${model.reviews30d} pull request reviews in the recent event window</title>${Array.from({ length: Math.min(8, model.reviews30d) }, (_, index) => `<use href="#spark" class="review-star r${index}" x="${92 + index * 91}" y="${112 + (index % 3) * 37}" width="${6 + index % 3}"/>`).join("")}</g>`
+    : "";
+  const storm = model.ciState === "failure"
+    ? `<g data-phenomenon="ci-storm"><title>${escapeXml(model.ciLabel)} · storm active</title><path class="lightning" d="M720 102h22l-17 35h15l-33 49 10-38h-15z" fill="${palette.glow}"/>${Array.from({ length: 9 }, (_, index) => `<path class="rain rain-${index}" d="M${75 + index * 94} 108l-11 28" stroke="${palette.glass}" stroke-width="3"/>`).join("")}</g>`
+    : "";
+  return `${aurora}${meteors}${reviews}${storm}`;
+};
+
 const ciBuoy = (model: AquariumModel, palette: ThemePalette): string => {
   const color = model.ciState === "success" ? "#39d353" : model.ciState === "failure" ? "#ff5d68" : model.ciState === "in-progress" ? "#ffd166" : palette.muted;
   const icon = model.ciState === "success"
@@ -179,9 +261,9 @@ const scene = (theme: Theme, model: AquariumModel, creatures: readonly Creature[
   const titleId = `title-${theme}`;
   const descId = `desc-${theme}`;
   const fishCount = creatures.includes("fish") ? model.fish.length : 0;
-  const description = `${model.repository}: ${model.commits30d} commits in 30 days, ${fishCount} contributor fish, ${model.stars} stars. Creatures: ${creatures.join(", ") || "none"}. ${model.ciLabel}.`;
+  const description = `${model.repository}: ${model.commits30d} commits in 30 days, ${fishCount} evolving contributors, ${model.mergedPullRequests30d} merges, ${model.closedIssues30d} closed issues, ${model.reviews30d} reviews, ${model.stars} stars. World: ${theme}. Creatures: ${creatures.join(", ") || "none"}. ${model.ciLabel}.`;
   return `
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="900" height="320" viewBox="0 0 900 320" preserveAspectRatio="xMidYMid meet" shape-rendering="crispEdges" role="img" aria-labelledby="${titleId} ${descId}" data-theme="${theme}">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="900" height="320" viewBox="0 0 900 320" preserveAspectRatio="xMidYMid meet" shape-rendering="crispEdges" role="img" aria-labelledby="${titleId} ${descId}" data-theme="${theme}" data-world="${theme}">
   <title id="${titleId}">${escapeXml(model.title)} · Repo Aquarium</title>
   <desc id="${descId}">${escapeXml(description)} Motion pauses when reduced motion is preferred.</desc>
   <defs>
@@ -192,9 +274,9 @@ const scene = (theme: Theme, model: AquariumModel, creatures: readonly Creature[
     ${symbolDefs(palette)}
     <style>
       text{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;fill:${palette.text}}.heading{font-size:18px;font-weight:700;letter-spacing:.5px}.meta{font-size:11px;fill:${palette.muted}}.legend{font-size:10px;fill:${palette.text}}.tiny{font-size:8px;font-weight:700;fill:${palette.text}}.fish-name{font-size:8px;font-weight:700;fill:#fff}.fish-nameplate rect{fill:${palette.outline};opacity:.82}
-      .surface{animation:surface 5s steps(4,end) infinite}.theme-accent{animation:accent 6s steps(4,end) infinite alternate}.ray-a{animation:ray 8s steps(8,end) infinite}.ray-b{animation:ray 11s steps(8,end) -4s infinite}.far{animation:drift 16s steps(16,end) infinite}.plant-motion{transform-box:fill-box;transform-origin:bottom center;animation:sway 3.4s steps(4,end) infinite alternate}.plant-motion.alt{animation-delay:-1.7s}.plant-root{fill:${palette.plant}}.plant-mound{fill:${palette.sandDark}}.bubble{animation:rise var(--rise) steps(18,end) var(--wait) infinite}.b1{opacity:.55}.b2{opacity:.8}.b3{opacity:.4}
-      .swimmer{transform:translate(-80px,var(--lane)) scale(var(--scale));animation:swim var(--swim) linear var(--delay) infinite}.swimmer.reverse{animation-name:swim-reverse}.swimmer.reverse use{transform:translateX(64px) scaleX(-1)}.tail{transform-box:fill-box;transform-origin:right center;animation:tail .45s steps(2,end) infinite}.pearl{animation:twinkle 2.8s steps(3,end) infinite}.p1{animation-delay:-.7s}.p2{animation-delay:-1.4s}.p3{animation-delay:-2.1s}.jelly-motion{animation:jelly 4.2s steps(5,end) var(--phase) infinite}.crab-motion{animation:crab 13s steps(20,end) var(--phase) infinite}.turtle-motion{animation:turtle 9s steps(12,end) var(--phase) infinite}.seahorse-motion{animation:seahorse 4.8s steps(6,end) var(--phase) infinite}.octopus-motion{animation:octopus 4s steps(5,end) var(--phase) infinite}.ray-motion{animation:ray-swim 8s steps(12,end) var(--phase) infinite}.puffer-motion{transform-origin:center;animation:puffer 5s steps(4,end) var(--phase) infinite}.starfish-motion{transform-origin:center;animation:starfish 12s steps(12,end) var(--phase) infinite}.flipper{transform-box:fill-box;transform-origin:right center;animation:flipper 1.2s steps(2,end) infinite alternate}.tentacle{transform-box:fill-box;transform-origin:top center;animation:tentacle 1.8s steps(3,end) infinite alternate}.t2,.t4{animation-delay:-.9s}.chest.open .lid{transform-box:fill-box;transform-origin:left bottom;animation:chest 4s steps(3,end) infinite}.buoy.in-progress{animation:signal 1.5s steps(2,end) infinite}.buoy.failure{animation:signal .8s steps(2,end) infinite}
-      @keyframes surface{50%{transform:translateX(-12px)}}@keyframes accent{to{opacity:.7}}@keyframes ray{50%{opacity:.35;transform:translateX(25px)}}@keyframes drift{to{transform:translateX(35px)}}@keyframes sway{from{transform:skewX(-4deg)}to{transform:skewX(4deg)}}@keyframes rise{from{transform:translateY(15px);opacity:0}15%{opacity:.8}to{transform:translateY(-210px);opacity:0}}@keyframes swim{from{transform:translate(-80px,var(--lane)) scale(var(--scale))}to{transform:translate(980px,var(--lane)) scale(var(--scale))}}@keyframes swim-reverse{from{transform:translate(980px,var(--lane)) scale(var(--scale))}to{transform:translate(-80px,var(--lane)) scale(var(--scale))}}@keyframes tail{50%{transform:scaleX(.55)}}@keyframes twinkle{50%{opacity:.35}}@keyframes jelly{50%{transform:translateY(8px) scaleY(.92)}}@keyframes crab{50%{transform:translateX(90px)}}@keyframes turtle{50%{transform:translate(22px,5px)}}@keyframes seahorse{50%{transform:translateY(7px) rotate(2deg)}}@keyframes octopus{50%{transform:translateY(5px) scaleY(.95)}}@keyframes ray-swim{50%{transform:translate(42px,4px)}}@keyframes puffer{50%{transform:translate(12px,4px) scale(1.05)}}@keyframes starfish{to{transform:rotate(12deg)}}@keyframes flipper{to{transform:rotate(13deg)}}@keyframes tentacle{to{transform:skewX(6deg)}}@keyframes chest{50%{transform:rotate(-7deg)}}@keyframes signal{50%{opacity:.45}}
+      .surface{animation:surface 5s steps(4,end) infinite}.theme-accent{animation:accent 6s steps(4,end) infinite alternate}.ray-a{animation:ray 8s steps(8,end) infinite}.ray-b{animation:ray 11s steps(8,end) -4s infinite}.far{animation:drift 16s steps(16,end) infinite}.plant-motion{transform-box:fill-box;transform-origin:bottom center;animation:sway 3.4s steps(4,end) infinite alternate}.plant-motion.alt{animation-delay:-1.7s}.plant-root{fill:${palette.plant}}.plant-mound{fill:${palette.sandDark}}.bubble{animation:rise var(--rise) steps(18,end) var(--wait) infinite}.b1{opacity:.55}.b2{opacity:.8}.b3{opacity:.4}.theme-character{animation:character-float 4.8s steps(5,end) infinite alternate}.legendary{animation:legendary 9s steps(12,end) infinite alternate}.meteor{animation:meteor 3.8s steps(6,end) infinite}.m1,.m4{animation-delay:-1.2s}.m2,.m5{animation-delay:-2.4s}.aurora{animation:aurora 7s steps(6,end) infinite alternate}.review-star{animation:twinkle 2.4s steps(3,end) infinite}.r1,.r4,.r7{animation-delay:-.8s}.r2,.r5{animation-delay:-1.6s}.lightning{animation:lightning 2.6s steps(2,end) infinite}.rain{animation:rain 1.8s steps(5,end) infinite}.rain-1,.rain-4,.rain-7{animation-delay:-.6s}.rain-2,.rain-5,.rain-8{animation-delay:-1.2s}
+      .swimmer{transform:translate(-80px,var(--lane)) scale(var(--scale));animation:swim var(--swim) linear var(--delay) infinite}.swimmer.reverse{animation-name:swim-reverse}.swimmer.reverse>use{transform:translateX(64px) scaleX(-1)}.evolution-mark{animation:twinkle 3s steps(3,end) infinite}.stage-1 .evolution-mark{opacity:.7}.stage-3 .evolution-mark{animation-duration:1.8s}.tail{transform-box:fill-box;transform-origin:right center;animation:tail .45s steps(2,end) infinite}.pearl{animation:twinkle 2.8s steps(3,end) infinite}.p1{animation-delay:-.7s}.p2{animation-delay:-1.4s}.p3{animation-delay:-2.1s}.jelly-motion{animation:jelly 4.2s steps(5,end) var(--phase) infinite}.crab-motion{animation:crab 13s steps(20,end) var(--phase) infinite}.turtle-motion{animation:turtle 9s steps(12,end) var(--phase) infinite}.seahorse-motion{animation:seahorse 4.8s steps(6,end) var(--phase) infinite}.octopus-motion{animation:octopus 4s steps(5,end) var(--phase) infinite}.ray-motion{animation:ray-swim 8s steps(12,end) var(--phase) infinite}.puffer-motion{transform-origin:center;animation:puffer 5s steps(4,end) var(--phase) infinite}.starfish-motion{transform-origin:center;animation:starfish 12s steps(12,end) var(--phase) infinite}.flipper{transform-box:fill-box;transform-origin:right center;animation:flipper 1.2s steps(2,end) infinite alternate}.tentacle{transform-box:fill-box;transform-origin:top center;animation:tentacle 1.8s steps(3,end) infinite alternate}.t2,.t4{animation-delay:-.9s}.chest.open .lid{transform-box:fill-box;transform-origin:left bottom;animation:chest 4s steps(3,end) infinite}.buoy.in-progress{animation:signal 1.5s steps(2,end) infinite}.buoy.failure{animation:signal .8s steps(2,end) infinite}
+      @keyframes surface{50%{transform:translateX(-12px)}}@keyframes accent{to{opacity:.7}}@keyframes ray{50%{opacity:.35;transform:translateX(25px)}}@keyframes drift{to{transform:translateX(35px)}}@keyframes sway{from{transform:skewX(-4deg)}to{transform:skewX(4deg)}}@keyframes character-float{to{transform:translateY(7px) rotate(2deg)}}@keyframes legendary{to{transform:translateX(34px) scale(1.03)}}@keyframes meteor{from{transform:translate(35px,-35px);opacity:0}35%{opacity:.9}to{transform:translate(-35px,35px);opacity:0}}@keyframes aurora{to{transform:translateX(22px);opacity:.55}}@keyframes lightning{0%,45%,55%,100%{opacity:0}50%{opacity:1}}@keyframes rain{from{transform:translate(15px,-25px)}to{transform:translate(-15px,70px)}}@keyframes rise{from{transform:translateY(15px);opacity:0}15%{opacity:.8}to{transform:translateY(-210px);opacity:0}}@keyframes swim{from{transform:translate(-80px,var(--lane)) scale(var(--scale))}to{transform:translate(980px,var(--lane)) scale(var(--scale))}}@keyframes swim-reverse{from{transform:translate(980px,var(--lane)) scale(var(--scale))}to{transform:translate(-80px,var(--lane)) scale(var(--scale))}}@keyframes tail{50%{transform:scaleX(.55)}}@keyframes twinkle{50%{opacity:.35}}@keyframes jelly{50%{transform:translateY(8px) scaleY(.92)}}@keyframes crab{50%{transform:translateX(90px)}}@keyframes turtle{50%{transform:translate(22px,5px)}}@keyframes seahorse{50%{transform:translateY(7px) rotate(2deg)}}@keyframes octopus{50%{transform:translateY(5px) scaleY(.95)}}@keyframes ray-swim{50%{transform:translate(42px,4px)}}@keyframes puffer{50%{transform:translate(12px,4px) scale(1.05)}}@keyframes starfish{to{transform:rotate(12deg)}}@keyframes flipper{to{transform:rotate(13deg)}}@keyframes tentacle{to{transform:skewX(6deg)}}@keyframes chest{50%{transform:rotate(-7deg)}}@keyframes signal{50%{opacity:.45}}
       @media(prefers-reduced-motion:reduce){*{animation:none!important}.swimmer,.swimmer.reverse{transform:translate(var(--rest),var(--lane)) scale(var(--scale))}.bubble{opacity:.65}.chest.open .lid{transform:rotate(-18deg) translateY(-7px)}}
     </style>
   </defs>
@@ -207,7 +289,7 @@ const scene = (theme: Theme, model: AquariumModel, creatures: readonly Creature[
     <g class="far" opacity=".45"><path d="M-30 263h90l20-35 24 35h77l32-29 37 29h91l29-38 42 38h93l37-28 26 28h98l26-37 36 37h140v57H-30z" fill="${palette.rock}"/></g>
     ${languageLegend(model, palette)}
     <text x="28" y="31" class="heading">${escapeXml(model.title)}</text><text x="28" y="48" class="meta">${model.commits30d} commits / 30d · ${model.stars} stars · ${escapeXml(model.lastCommitLabel)}</text>
-    <g clip-path="url(#water-zone-${theme})">${bubbles(model)}${creatures.includes("fish") ? fish(model, palette) : ""}${ambientCreatures(creatures, model)}</g>
+    <g clip-path="url(#water-zone-${theme})">${repositoryPhenomena(model, palette)}${legendaryCreature(theme, model, palette)}${bubbles(model)}${creatures.includes("fish") ? fish(theme, model, palette) : ""}${ambientCreatures(creatures, model)}${themeCast(theme)}</g>
     ${ciBuoy(model, palette)}
     <g class="near"><path d="M0 285h900v35H0z" fill="${palette.sand}"/><path d="M0 300h900v20H0z" fill="${palette.sandDark}"/><path d="M0 287h65v4h72v-3h80v5h85v-4h70v3h90v-5h78v4h92v-3h90v5h89v-4h89v31H0z" fill="${palette.sand}"/></g>
     <g data-scene-object="plant" data-safe-zone="underwater" data-root-y="287" transform="translate(52 220)"><g class="plant-motion"><path d="M10 67V12h8v55zm8-31 20-22v10L18 47zm-8 8L0 28v-9l10 13z" fill="${palette.plant}"/><path d="M14 57V25h4v32z" fill="${palette.plantLight}"/></g><rect class="plant-root" x="10" y="61" width="8" height="12"/><path class="plant-mound" d="M3 67h24l5 7H-2z"/></g>
