@@ -2,10 +2,10 @@
   "repository": "JongHyun070105/repo-aquarium",
   "title": "repo-aquarium",
   "stars": 0,
-  "commits30d": 2,
+  "commits30d": 0,
   "mergedPullRequests30d": 0,
   "closedIssues30d": 0,
-  "reviews30d": 2,
+  "reviews30d": 0,
   "contributors": [
     {
       "login": "JongHyun070105",
@@ -13,13 +13,6 @@
       "recentCommits": 0,
       "pullRequests": 0,
       "reviews": 0
-    },
-    {
-      "login": "gemini-code-assist[bot]",
-      "contributions": 0,
-      "recentCommits": 0,
-      "pullRequests": 0,
-      "reviews": 2
     },
     {
       "login": "github-actions[bot]",
@@ -51,7 +44,7 @@
     "status": "completed",
     "conclusion": "success"
   },
-  "generatedAt": "2026-08-12T02:47:07.178Z",
+  "generatedAt": "2026-08-13T03:01:41.882Z",
   "configuration": {
     "themes": [
       "coral-day",
